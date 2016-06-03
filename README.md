@@ -1,6 +1,20 @@
 # Trabalho de programação II
 
-##Descrição do trabalho:
+* [Regra de negócio restaurante](#Negocio)
+* [Descrição do trabalho](#Descricao)
+
+##<a name="Negocio"><a/> Regra de negocio:
+1. Cadastro de usuários
+2. Cadastro de pedidos
+3. Cadastro de mesas
+4. Cadastro de usuários
+5. Hierarquia de usuários com 3 níveis: gerente, caixa e garçom.
+  1. Garçom deve ter acesso somente a tela de busca de mesa e cadastro de pedidos
+  2. Caixa deve ter as permissões de garçom com adicional de fechar a conta e mudar o status da mesa(Reservado, Ocupado, Livre).
+  3. Gerente teria acesso a tudo.
+
+
+##<a name="Descricao"></a> Descrição do trabalho:
 
 ###O trabalho da disciplina consiste em desenvolver um sistema Java com as seguintes características:
 1. Deve ter pelo menos 3 entidades (por exemplo: Cliente, Venda, Locação, Produto,Categoria, etc.). Pelo menos uma dessas entidades deve representação umatransação, ou seja, o propósito principal do sistema (por exemplo, se for um sistemade uma locadora, a transação é a locação, se for uma loja, a transação é Venda);
