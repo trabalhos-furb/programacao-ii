@@ -4,13 +4,17 @@
  * and open the template in the editor.
  */
 package trabalhoprogramacao2;
-
+import ClasseCadastro.Usuario;
+import TelaCadastro.TelaProduto;
+import TelaCadastro.TelaUsuarios;
+import java.util.ArrayList;
 /**
  *
  * @author junio_000
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-
+ public static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+    public static Usuario usuarioSelec = new Usuario();
     /**
      * Creates new form TelaPrincipal
      */
