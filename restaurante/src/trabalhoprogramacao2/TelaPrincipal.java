@@ -4,17 +4,20 @@
  * and open the template in the editor.
  */
 package trabalhoprogramacao2;
+
 import ClasseCadastro.Usuario;
-import TelaCadastro.TelaProduto;
 import TelaCadastro.TelaUsuarios;
 import java.util.ArrayList;
+
 /**
  *
  * @author junio_000
  */
 public class TelaPrincipal extends javax.swing.JFrame {
- public static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+
+    public static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
     public static Usuario usuarioSelec = new Usuario();
+
     /**
      * Creates new form TelaPrincipal
      */
@@ -197,7 +200,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         descricaoProduto.setText("Remover este texto.");
 
-        quantidadeProduto.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        quantidadeProduto.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         quantidadeProduto.setToolTipText("");
 
         jLabel5.setText("Quantidade");
@@ -227,6 +230,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu1.setText("Cadastros");
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Usuário");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,6 +239,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setText("Produto");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,6 +248,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem3.setText("Mesa");
         jMenu1.add(jMenuItem3);
 
@@ -330,7 +336,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_lbValorTotalMesaActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        TelaUsuarios telaUsuario = new TelaUsuarios(this, true);
+        telaUsuario.setLocationRelativeTo(null);
+        telaUsuario.setModal(true);
+        telaUsuario.setVisible(true); //Chama a dialog
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed

@@ -9,6 +9,9 @@ import ClasseCadastro.Cargo;
 import ClasseCadastro.Usuario;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -20,6 +23,7 @@ import static trabalhoprogramacao2.TelaPrincipal.usuarioSelec;
  */
 public class Pesquisa extends javax.swing.JDialog {
 
+    Path verificaSeExiste = Paths.get("C:\\Users\\Public\\Documents\\usuarios.data");
     DefaultTableModel modelo;
     ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
@@ -33,7 +37,7 @@ public class Pesquisa extends javax.swing.JDialog {
         String[] colunas = new String[]{"Login", "Senha", "Cargo"};
         modelo = new DefaultTableModel(null, colunas);
         Table.setModel(modelo);
-        
+
         preencheListaUsuario();
 
     }
@@ -148,10 +152,8 @@ public class Pesquisa extends javax.swing.JDialog {
                 final Usuario usuario = listaUsuarios.get(i);
                 if (TxtLogin.getText().isEmpty()) {
                     modelo.addRow(new Object[]{usuario.getLogin(), usuario.getSenha(), usuario.getCargo()});// adiciona na jtbale
-                } else {
-                    if (TxtLogin.getText().equalsIgnoreCase(usuario.getLogin())) {
-                        modelo.addRow(new Object[]{usuario.getLogin(), usuario.getSenha(), usuario.getCargo()});
-                    }
+                } else if (TxtLogin.getText().equalsIgnoreCase(usuario.getLogin())) {
+                    modelo.addRow(new Object[]{usuario.getLogin(), usuario.getSenha(), usuario.getCargo()});
                 }
             }
         } else {
@@ -177,26 +179,29 @@ public class Pesquisa extends javax.swing.JDialog {
     }//GEN-LAST:event_seleciona
 
     public void preencheListaUsuario() {
-        try {
-            /*
+
+        if (Files.exists(verificaSeExiste)) {
+            try {
+                /*
              * Responsável por carregar o arquivo address.ser
              * */
-            FileInputStream fin = new FileInputStream("C:/Users/Public/Documents/usuario.data");
+                FileInputStream fin = new FileInputStream(verificaSeExiste.toString());
 
-            /*
+                /*
              * Responsável por ler o objeto referente ao arquivo
              * */
-            ObjectInputStream ois = new ObjectInputStream(fin);
+                ObjectInputStream ois = new ObjectInputStream(fin);
 
-            /*
+                /*
              * Aqui a mágica é feita, onde os bytes presentes no arquivo address.ser
              * são convertidos em uma instância de Address.
              * */
-            listaUsuarios = (ArrayList) ois.readObject();
-            ois.close();
+                listaUsuarios = (ArrayList) ois.readObject();
+                ois.close();
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

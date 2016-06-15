@@ -12,6 +12,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import static trabalhoprogramacao2.TelaPrincipal.listaUsuarios;
@@ -23,6 +26,7 @@ import static trabalhoprogramacao2.TelaPrincipal.usuarioSelec;
  */
 public class TelaUsuarios extends javax.swing.JDialog {
 
+    Path verificaSeExiste = Paths.get("C:\\Users\\Public\\Documents\\usuarios.data");
     boolean editar = false;
 
     /**
@@ -317,27 +321,30 @@ public class TelaUsuarios extends javax.swing.JDialog {
     }
 
     public void iniciaSistema() {
+ 
+        if (Files.exists(verificaSeExiste)) {
 
-        try {
-            /*
+            try {
+                /*
 		    * Responsável por carregar o arquivo address.ser
 		    * */
-            FileInputStream fin = new FileInputStream("C:/Users/Public/Documents/usuario.data");
-
-            /*
+                FileInputStream fin = new FileInputStream(verificaSeExiste.toString());
+                   
+                /*
 		    * Responsável por ler o objeto referente ao arquivo
 		    * */
-            ObjectInputStream ois = new ObjectInputStream(fin);
+                ObjectInputStream ois = new ObjectInputStream(fin);
 
-            /*
+                /*
 		    * Aqui a mágica é feita, onde os bytes presentes no arquivo address.ser
 		    * são convertidos em uma instância de Address.
 		    * */
-            listaUsuarios = (ArrayList) ois.readObject();
-            ois.close();
+                listaUsuarios = (ArrayList) ois.readObject();
+                ois.close();
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -350,7 +357,7 @@ public class TelaUsuarios extends javax.swing.JDialog {
 		 * o arquivo fisicamente no disco, assim poderemos realizar a 
 		 * escrita neste. 
 		 * */
-            FileOutputStream fout = new FileOutputStream("C:/Users/Public/Documents/usuario.data");
+            FileOutputStream fout = new FileOutputStream(verificaSeExiste.toString());
 
             /*
 		 * A Classe ObjectOutputStream escreve os objetos no FileOutputStream
