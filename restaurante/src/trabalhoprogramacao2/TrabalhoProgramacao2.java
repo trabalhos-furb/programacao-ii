@@ -7,7 +7,7 @@ package trabalhoprogramacao2;
 
 /**
  *
- * @author junio_000
+ * @author orlando.krause
  */
 public class TrabalhoProgramacao2 {
 
