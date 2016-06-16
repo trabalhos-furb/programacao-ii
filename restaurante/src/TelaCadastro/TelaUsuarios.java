@@ -8,6 +8,8 @@ package TelaCadastro;
 import ClasseCadastro.Cargo;
 import ClasseCadastro.Usuario;
 import Pesquisa.Pesquisa;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -35,9 +37,7 @@ public class TelaUsuarios extends javax.swing.JDialog {
     public TelaUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        BtCancelar.setVisible(false);
-        Btgravar.setVisible(false);
-        this.configuraBotao(2);
+               
         this.iniciaSistema();
     }
 
@@ -52,12 +52,10 @@ public class TelaUsuarios extends javax.swing.JDialog {
 
         ComboboxCargo = new javax.swing.JComboBox<>(ClasseCadastro.Cargo.values());
         LabelCargo = new javax.swing.JLabel();
-        Btgravar = new javax.swing.JButton();
         BtEditar = new javax.swing.JButton();
         labelLogin = new javax.swing.JLabel();
         BtPesquisar = new javax.swing.JButton();
         TxtLogin = new javax.swing.JTextField();
-        BtCancelar = new javax.swing.JButton();
         labelSenha = new javax.swing.JLabel();
         BtExcluir = new javax.swing.JButton();
         TxtSenha = new javax.swing.JPasswordField();
@@ -69,21 +67,13 @@ public class TelaUsuarios extends javax.swing.JDialog {
         setTitle("Cadastro de Usuário");
 
         ComboboxCargo.setEditable(true);
+        ComboboxCargo.setEnabled(false);
 
         LabelCargo.setText("Cargo:");
 
-        Btgravar.setText("Gravar");
-        Btgravar.setFocusable(false);
-        Btgravar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Btgravar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        Btgravar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtgravarActionPerformed(evt);
-            }
-        });
-
         BtEditar.setText("Editar");
         BtEditar.setAlignmentY(0.0F);
+        BtEditar.setEnabled(false);
         BtEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtEditarActionPerformed(evt);
@@ -93,18 +83,14 @@ public class TelaUsuarios extends javax.swing.JDialog {
         labelLogin.setText("Login:");
 
         BtPesquisar.setText("Pesquisar");
+        BtPesquisar.setEnabled(false);
         BtPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtPesquisarActionPerformed(evt);
             }
         });
 
-        BtCancelar.setText("Cancelar");
-        BtCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtCancelarActionPerformed(evt);
-            }
-        });
+        TxtLogin.setEnabled(false);
 
         labelSenha.setText("Senha:");
 
@@ -115,12 +101,16 @@ public class TelaUsuarios extends javax.swing.JDialog {
             }
         });
 
+        TxtSenha.setEnabled(false);
+
         BtNovo.setText("Novo");
         BtNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtNovoActionPerformed(evt);
             }
         });
+
+        TxtConfirmaSenha.setEnabled(false);
 
         LabelConfirmaSenha.setText("Confirme a senha:");
 
@@ -129,34 +119,30 @@ public class TelaUsuarios extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BtNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Btgravar)
-                                .addGap(18, 18, 18)
-                                .addComponent(BtExcluir))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(156, 156, 156)
-                                .addComponent(BtEditar)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BtPesquisar))
-                    .addComponent(TxtLogin)
-                    .addComponent(TxtSenha)
-                    .addComponent(TxtConfirmaSenha)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ComboboxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelSenha)
                             .addComponent(LabelConfirmaSenha)
-                            .addComponent(ComboboxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(LabelCargo)
-                            .addComponent(labelLogin)
-                            .addComponent(BtCancelar))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(labelLogin))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(TxtLogin, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TxtSenha)
+                            .addComponent(TxtConfirmaSenha, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(BtNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(1, 1, 1)
+                                .addComponent(BtExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(1, 1, 1)
+                                .addComponent(BtEditar)
+                                .addGap(1, 1, 1)
+                                .addComponent(BtPesquisar)))
+                        .addGap(10, 10, 10))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,17 +163,13 @@ public class TelaUsuarios extends javax.swing.JDialog {
                 .addComponent(LabelCargo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ComboboxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Btgravar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(BtEditar)
-                        .addComponent(BtExcluir)
-                        .addComponent(BtPesquisar)
-                        .addComponent(BtNovo)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtCancelar)
-                .addContainerGap())
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(BtPesquisar)
+                    .addComponent(BtExcluir)
+                    .addComponent(BtNovo)
+                    .addComponent(BtEditar))
+                .addGap(10, 10, 10))
         );
 
         pack();
@@ -197,7 +179,43 @@ public class TelaUsuarios extends javax.swing.JDialog {
         this.configuraBotao(1);
     }//GEN-LAST:event_BtNovoActionPerformed
 
-    private void BtgravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtgravarActionPerformed
+    private void BtEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtEditarActionPerformed
+        this.configuraBotao(1);
+        this.editar = true;
+    }//GEN-LAST:event_BtEditarActionPerformed
+
+    private void BtExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtExcluirActionPerformed
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if (listaUsuarios.get(i).getLogin().equals(TxtLogin.getText())
+                    && listaUsuarios.get(i).getSenha().equals(TxtSenha.getText())) {
+                listaUsuarios.remove(i);
+                if (this.salvarUsuario()) {
+                    TxtLogin.setText(null);
+                    TxtSenha.setText(null);
+                    TxtConfirmaSenha.setText(null);
+                    JOptionPane.showMessageDialog(null, "Usuário removido!");
+                }
+            }
+        }
+    }//GEN-LAST:event_BtExcluirActionPerformed
+
+    private void BtPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtPesquisarActionPerformed
+        Pesquisa pesquisar = new Pesquisa(null, true, 1);
+
+        pesquisar.setLocationRelativeTo(null);
+        pesquisar.setModal(true);
+        pesquisar.setVisible(true);
+
+        if (!(usuarioSelec.getLogin().isEmpty() && usuarioSelec.getSenha().isEmpty())) {
+            TxtLogin.setText(usuarioSelec.getLogin());
+            TxtSenha.setText(usuarioSelec.getSenha());
+            ComboboxCargo.setSelectedItem(usuarioSelec.getCargo());
+
+            this.BtEditar.setEnabled(true);
+        }
+
+    }//GEN-LAST:event_BtPesquisarActionPerformed
+    private void BtgravarActionPerformed(java.awt.event.ActionEvent evt) {
 
         if (this.TxtSenha.getText().equals(this.TxtConfirmaSenha.getText())) {
 
@@ -244,84 +262,78 @@ public class TelaUsuarios extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Senhas diferentes por favor verifique!.");
         }
 
+    }
 
-    }//GEN-LAST:event_BtgravarActionPerformed
-
-    private void BtEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtEditarActionPerformed
-        this.configuraBotao(1);
-        this.editar = true;
-    }//GEN-LAST:event_BtEditarActionPerformed
-
-    private void BtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtCancelarActionPerformed
+    private void BtCancelarActionPerformed(java.awt.event.ActionEvent evt) {
         if (JOptionPane.showConfirmDialog(null, "Deseja realmente cancelar?", "Atenção", JOptionPane.YES_NO_OPTION) == 0) {
             TxtLogin.setText(null);
             TxtSenha.setText(null);
             TxtConfirmaSenha.setText(null);
             configuraBotao(2);
         }
-    }//GEN-LAST:event_BtCancelarActionPerformed
-
-    private void BtExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtExcluirActionPerformed
-        for (int i = 0; i < listaUsuarios.size(); i++) {
-            if (listaUsuarios.get(i).getLogin().equals(TxtLogin.getText())
-                    && listaUsuarios.get(i).getSenha().equals(TxtSenha.getText())) {
-                listaUsuarios.remove(i);
-                if (this.salvarUsuario()) {
-                    TxtLogin.setText(null);
-                    TxtSenha.setText(null);
-                    TxtConfirmaSenha.setText(null);
-                    JOptionPane.showMessageDialog(null, "Usuário removido!");
-                }
-            }
-        }
-    }//GEN-LAST:event_BtExcluirActionPerformed
-
-    private void BtPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtPesquisarActionPerformed
-        Pesquisa pesquisar = new Pesquisa(null, true, 1);
-
-        pesquisar.setLocationRelativeTo(null);
-        pesquisar.setModal(true);
-        pesquisar.setVisible(true);
-
-        TxtLogin.setText(usuarioSelec.getLogin());
-        TxtSenha.setText(usuarioSelec.getSenha());
-        ComboboxCargo.setSelectedItem(usuarioSelec.getCargo());
-
-    }//GEN-LAST:event_BtPesquisarActionPerformed
+    }
 
     private void configuraBotao(int opcao) {
 
         if (opcao == 1) {
 
-            this.BtNovo.setVisible(false);
-            this.BtEditar.setVisible(false);
-            this.BtPesquisar.setVisible(false);
-            this.Btgravar.setVisible(true);
-            this.BtCancelar.setVisible(true);
+            this.BtPesquisar.setEnabled(false);
             this.TxtSenha.setEnabled(true);
             this.TxtLogin.setEnabled(true);
             this.TxtConfirmaSenha.setEnabled(true);
             this.ComboboxCargo.setEnabled(true);
-            BtExcluir.setVisible(false);
+         
+            this.BtNovo.removeActionListener(this.BtNovo.getActionListeners()[0]);
+            this.BtNovo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    BtgravarActionPerformed(e);
+                }
+            });
+            this.BtNovo.setText("Gravar");
+
+            this.BtExcluir.removeActionListener(this.BtExcluir.getActionListeners()[0]);
+            this.BtExcluir.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    BtCancelarActionPerformed(e);
+                }
+            });
+
+            this.BtExcluir.setText("Cancelar");
 
         } else {
-            BtExcluir.setVisible(true);
 
-            this.BtNovo.setVisible(true);
-            this.BtEditar.setVisible(true);
-            this.BtPesquisar.setVisible(true);
-            this.Btgravar.setVisible(false);
-            this.BtCancelar.setVisible(false);
+            this.BtPesquisar.setEnabled(true);
             this.TxtSenha.setEnabled(false);
             this.TxtLogin.setEnabled(false);
             this.TxtConfirmaSenha.setEnabled(false);
             this.ComboboxCargo.setEnabled(false);
+
+            this.BtNovo.removeActionListener(this.BtNovo.getActionListeners()[0]);
+            this.BtNovo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    BtNovoActionPerformed(e);
+                }
+            });
+            this.BtNovo.setText("Novo");
+
+            this.BtExcluir.removeActionListener(this.BtExcluir.getActionListeners()[0]);
+            this.BtExcluir.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    BtExcluirActionPerformed(e);
+                }
+            });
+            this.BtExcluir.setText("Excluir");
+
         }
 
     }
 
     public void iniciaSistema() {
- 
+
         if (Files.exists(verificaSeExiste)) {
 
             try {
@@ -329,7 +341,7 @@ public class TelaUsuarios extends javax.swing.JDialog {
 		    * Responsável por carregar o arquivo address.ser
 		    * */
                 FileInputStream fin = new FileInputStream(verificaSeExiste.toString());
-                   
+
                 /*
 		    * Responsável por ler o objeto referente ao arquivo
 		    * */
@@ -426,12 +438,10 @@ public class TelaUsuarios extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton BtCancelar;
     public javax.swing.JButton BtEditar;
     private javax.swing.JButton BtExcluir;
     public javax.swing.JButton BtNovo;
     public javax.swing.JButton BtPesquisar;
-    public javax.swing.JButton Btgravar;
     public javax.swing.JComboBox<ClasseCadastro.Cargo> ComboboxCargo;
     private javax.swing.JLabel LabelCargo;
     private javax.swing.JLabel LabelConfirmaSenha;

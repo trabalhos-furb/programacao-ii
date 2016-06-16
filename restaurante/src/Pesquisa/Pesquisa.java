@@ -60,6 +60,7 @@ public class Pesquisa extends javax.swing.JDialog {
         Table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Pesquisa de Usuário");
 
         LabelLogin.setText("Login:");
 
