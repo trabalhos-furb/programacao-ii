@@ -7,20 +7,11 @@ package TelaCadastro;
 
 import ClasseCadastro.Cargo;
 import ClasseCadastro.Usuario;
+import Controller.ControllerUsuario;
 import Pesquisa.Pesquisa;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import static trabalhoprogramacao2.TelaPrincipal.listaUsuarios;
-import static trabalhoprogramacao2.TelaPrincipal.usuarioSelec;
 
 /**
  *
@@ -28,8 +19,7 @@ import static trabalhoprogramacao2.TelaPrincipal.usuarioSelec;
  */
 public class TelaUsuarios extends javax.swing.JDialog {
 
-    Path verificaSeExiste = Paths.get("C:\\Users\\Public\\Documents\\usuarios.data");
-    boolean editar = false;
+    Controller.ControllerUsuario controleUsario = new ControllerUsuario();
 
     /**
      * Creates new form TelaUsuarios
@@ -37,8 +27,7 @@ public class TelaUsuarios extends javax.swing.JDialog {
     public TelaUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-               
-        this.iniciaSistema();
+        controleUsario.carregaListaUsuario();
     }
 
     /**
@@ -50,69 +39,69 @@ public class TelaUsuarios extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ComboboxCargo = new javax.swing.JComboBox<>(ClasseCadastro.Cargo.values());
-        LabelCargo = new javax.swing.JLabel();
-        BtEditar = new javax.swing.JButton();
+        comboboxCargo = new javax.swing.JComboBox<>(ClasseCadastro.Cargo.values());
+        labelCargo = new javax.swing.JLabel();
+        btEditar = new javax.swing.JButton();
         labelLogin = new javax.swing.JLabel();
-        BtPesquisar = new javax.swing.JButton();
-        TxtLogin = new javax.swing.JTextField();
+        btPesquisar = new javax.swing.JButton();
+        txtLogin = new javax.swing.JTextField();
         labelSenha = new javax.swing.JLabel();
-        BtExcluir = new javax.swing.JButton();
-        TxtSenha = new javax.swing.JPasswordField();
-        BtNovo = new javax.swing.JButton();
-        TxtConfirmaSenha = new javax.swing.JPasswordField();
-        LabelConfirmaSenha = new javax.swing.JLabel();
+        btExcluir = new javax.swing.JButton();
+        txtSenha = new javax.swing.JPasswordField();
+        btNovo = new javax.swing.JButton();
+        txtConfirmaSenha = new javax.swing.JPasswordField();
+        labelConfirmaSenha = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Usuário");
 
-        ComboboxCargo.setEditable(true);
-        ComboboxCargo.setEnabled(false);
+        comboboxCargo.setEditable(true);
+        comboboxCargo.setEnabled(false);
 
-        LabelCargo.setText("Cargo:");
+        labelCargo.setText("Cargo:");
 
-        BtEditar.setText("Editar");
-        BtEditar.setAlignmentY(0.0F);
-        BtEditar.setEnabled(false);
-        BtEditar.addActionListener(new java.awt.event.ActionListener() {
+        btEditar.setText("Editar");
+        btEditar.setAlignmentY(0.0F);
+        btEditar.setEnabled(false);
+        btEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtEditarActionPerformed(evt);
+                btEditarActionPerformed(evt);
             }
         });
 
         labelLogin.setText("Login:");
 
-        BtPesquisar.setText("Pesquisar");
-        BtPesquisar.setEnabled(false);
-        BtPesquisar.addActionListener(new java.awt.event.ActionListener() {
+        btPesquisar.setText("Pesquisar");
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtPesquisarActionPerformed(evt);
+                btPesquisarActionPerformed(evt);
             }
         });
 
-        TxtLogin.setEnabled(false);
+        txtLogin.setEnabled(false);
 
         labelSenha.setText("Senha:");
 
-        BtExcluir.setText("Excluir");
-        BtExcluir.addActionListener(new java.awt.event.ActionListener() {
+        btExcluir.setText("Excluir");
+        btExcluir.setEnabled(false);
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtExcluirActionPerformed(evt);
+                btExcluirActionPerformed(evt);
             }
         });
 
-        TxtSenha.setEnabled(false);
+        txtSenha.setEnabled(false);
 
-        BtNovo.setText("Novo");
-        BtNovo.addActionListener(new java.awt.event.ActionListener() {
+        btNovo.setText("Novo");
+        btNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtNovoActionPerformed(evt);
+                btNovoActionPerformed(evt);
             }
         });
 
-        TxtConfirmaSenha.setEnabled(false);
+        txtConfirmaSenha.setEnabled(false);
 
-        LabelConfirmaSenha.setText("Confirme a senha:");
+        labelConfirmaSenha.setText("Confirme a senha:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -123,25 +112,25 @@ public class TelaUsuarios extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ComboboxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboboxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelSenha)
-                            .addComponent(LabelConfirmaSenha)
-                            .addComponent(LabelCargo)
+                            .addComponent(labelConfirmaSenha)
+                            .addComponent(labelCargo)
                             .addComponent(labelLogin))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(TxtLogin, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TxtSenha)
-                            .addComponent(TxtConfirmaSenha, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtLogin, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSenha)
+                            .addComponent(txtConfirmaSenha, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(BtNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(1, 1, 1)
-                                .addComponent(BtExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(1, 1, 1)
-                                .addComponent(BtEditar)
+                                .addComponent(btEditar)
                                 .addGap(1, 1, 1)
-                                .addComponent(BtPesquisar)))
+                                .addComponent(btPesquisar)))
                         .addGap(10, 10, 10))))
         );
         layout.setVerticalGroup(
@@ -150,112 +139,79 @@ public class TelaUsuarios extends javax.swing.JDialog {
                 .addGap(10, 10, 10)
                 .addComponent(labelLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TxtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LabelConfirmaSenha)
+                .addComponent(labelConfirmaSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtConfirmaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtConfirmaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
-                .addComponent(LabelCargo)
+                .addComponent(labelCargo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ComboboxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboboxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(BtPesquisar)
-                    .addComponent(BtExcluir)
-                    .addComponent(BtNovo)
-                    .addComponent(BtEditar))
+                    .addComponent(btPesquisar)
+                    .addComponent(btExcluir)
+                    .addComponent(btNovo)
+                    .addComponent(btEditar))
                 .addGap(10, 10, 10))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtNovoActionPerformed
+    private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
         this.configuraBotao(1);
-    }//GEN-LAST:event_BtNovoActionPerformed
+    }//GEN-LAST:event_btNovoActionPerformed
 
-    private void BtEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtEditarActionPerformed
+    private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
         this.configuraBotao(1);
-        this.editar = true;
-    }//GEN-LAST:event_BtEditarActionPerformed
+        this.btEditar.setEnabled(false);
+    }//GEN-LAST:event_btEditarActionPerformed
 
-    private void BtExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtExcluirActionPerformed
-        for (int i = 0; i < listaUsuarios.size(); i++) {
-            if (listaUsuarios.get(i).getLogin().equals(TxtLogin.getText())
-                    && listaUsuarios.get(i).getSenha().equals(TxtSenha.getText())) {
-                listaUsuarios.remove(i);
-                if (this.salvarUsuario()) {
-                    TxtLogin.setText(null);
-                    TxtSenha.setText(null);
-                    TxtConfirmaSenha.setText(null);
-                    JOptionPane.showMessageDialog(null, "Usuário removido!");
-                }
-            }
-        }
-    }//GEN-LAST:event_BtExcluirActionPerformed
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        controleUsario.removeUsuario(this.txtLogin.getText());
+        this.configuraBotao(2);
+    }//GEN-LAST:event_btExcluirActionPerformed
 
-    private void BtPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtPesquisarActionPerformed
-        Pesquisa pesquisar = new Pesquisa(null, true, 1);
+    private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
+        Pesquisa pesquisar = new Pesquisa(null, true);
 
         pesquisar.setLocationRelativeTo(null);
         pesquisar.setModal(true);
         pesquisar.setVisible(true);
 
-        if (!(usuarioSelec.getLogin().isEmpty() && usuarioSelec.getSenha().isEmpty())) {
-            TxtLogin.setText(usuarioSelec.getLogin());
-            TxtSenha.setText(usuarioSelec.getSenha());
-            ComboboxCargo.setSelectedItem(usuarioSelec.getCargo());
+        if (!(pesquisar.getNomeSelecionado().isEmpty())) {
+            Usuario usuarioSelecionado = controleUsario.pesquisarUsuario(pesquisar.getNomeSelecionado());
+            txtLogin.setText(usuarioSelecionado.getLogin());
+            txtSenha.setText(usuarioSelecionado.getSenha());
+            comboboxCargo.setSelectedItem(usuarioSelecionado.getCargo());
 
-            this.BtEditar.setEnabled(true);
+            this.btEditar.setEnabled(true);
+            this.btExcluir.setEnabled(true);
         }
 
-    }//GEN-LAST:event_BtPesquisarActionPerformed
+    }//GEN-LAST:event_btPesquisarActionPerformed
+
     private void BtgravarActionPerformed(java.awt.event.ActionEvent evt) {
 
-        if (this.TxtSenha.getText().equals(this.TxtConfirmaSenha.getText())) {
+        if (this.txtSenha.getText().equals(this.txtConfirmaSenha.getText())) {
 
-            if (this.TxtLogin.getText().isEmpty()) {
+            if (this.txtLogin.getText().isEmpty()) {
 
                 JOptionPane.showMessageDialog(null, "Por favor para prosegui insira um login válido");
 
-            } else if (this.TxtSenha.getText().isEmpty()) {
+            } else if (this.txtSenha.getText().isEmpty()) {
 
                 JOptionPane.showMessageDialog(null, "Por favor para prosegui insira uma senha válida");
 
             } else {
-
-                if (editar == true) {
-                    for (int i = 0; i < listaUsuarios.size(); i++) {
-
-                        if (usuarioSelec.getLogin().equals(listaUsuarios.get(i).getLogin())
-                                && usuarioSelec.getSenha().equals(listaUsuarios.get(i).getSenha())) {
-
-                            listaUsuarios.get(i).setLogin(TxtLogin.getText());
-                            listaUsuarios.get(i).setSenha(TxtSenha.getText());
-                            listaUsuarios.get(i).setCargo((Cargo) ComboboxCargo.getSelectedItem());
-                            this.editar = false;
-                            break;
-
-                        }
-
-                    }
-                } else {
-                    Usuario usu = new Usuario(this.TxtLogin.getText(), this.TxtSenha.getText(), (Cargo) this.ComboboxCargo.getSelectedItem());
-                    listaUsuarios.add(usu);
-                }
-
-                if (this.salvarUsuario() == true) {
-                    TxtLogin.setText(null);
-                    TxtSenha.setText(null);
-                    TxtConfirmaSenha.setText(null);
-                    JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
-
-                }
+                controleUsario.gravarUsuario(this.txtLogin.getText(), this.txtSenha.getText(), (Cargo) comboboxCargo.getSelectedItem());
+                this.configuraBotao(2);
             }
 
         } else {
@@ -266,9 +222,9 @@ public class TelaUsuarios extends javax.swing.JDialog {
 
     private void BtCancelarActionPerformed(java.awt.event.ActionEvent evt) {
         if (JOptionPane.showConfirmDialog(null, "Deseja realmente cancelar?", "Atenção", JOptionPane.YES_NO_OPTION) == 0) {
-            TxtLogin.setText(null);
-            TxtSenha.setText(null);
-            TxtConfirmaSenha.setText(null);
+            txtLogin.setText(null);
+            txtSenha.setText(null);
+            txtConfirmaSenha.setText(null);
             configuraBotao(2);
         }
     }
@@ -277,122 +233,65 @@ public class TelaUsuarios extends javax.swing.JDialog {
 
         if (opcao == 1) {
 
-            this.BtPesquisar.setEnabled(false);
-            this.TxtSenha.setEnabled(true);
-            this.TxtLogin.setEnabled(true);
-            this.TxtConfirmaSenha.setEnabled(true);
-            this.ComboboxCargo.setEnabled(true);
-         
-            this.BtNovo.removeActionListener(this.BtNovo.getActionListeners()[0]);
-            this.BtNovo.addActionListener(new ActionListener() {
+            this.btPesquisar.setEnabled(false);
+            this.txtSenha.setEnabled(true);
+            this.txtLogin.setEnabled(true);
+            this.txtConfirmaSenha.setEnabled(true);
+            this.comboboxCargo.setEnabled(true);
+            this.btExcluir.setEnabled(true);
+
+            this.btNovo.removeActionListener(this.btNovo.getActionListeners()[0]);
+            this.btNovo.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     BtgravarActionPerformed(e);
                 }
             });
-            this.BtNovo.setText("Gravar");
+            this.btNovo.setText("Gravar");
 
-            this.BtExcluir.removeActionListener(this.BtExcluir.getActionListeners()[0]);
-            this.BtExcluir.addActionListener(new ActionListener() {
+            this.btExcluir.removeActionListener(this.btExcluir.getActionListeners()[0]);
+            this.btExcluir.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     BtCancelarActionPerformed(e);
                 }
             });
 
-            this.BtExcluir.setText("Cancelar");
+            this.btExcluir.setText("Cancelar");
 
         } else {
 
-            this.BtPesquisar.setEnabled(true);
-            this.TxtSenha.setEnabled(false);
-            this.TxtLogin.setEnabled(false);
-            this.TxtConfirmaSenha.setEnabled(false);
-            this.ComboboxCargo.setEnabled(false);
+            this.btPesquisar.setEnabled(true);
+            this.txtSenha.setEnabled(false);
+            this.txtLogin.setEnabled(false);
+            this.txtConfirmaSenha.setEnabled(false);
+            this.comboboxCargo.setEnabled(false);
+            this.btEditar.setEnabled(false);
+            this.txtLogin.setText(null);
+            this.txtSenha.setText(null);
+            this.btExcluir.setEnabled(false);
+            this.txtConfirmaSenha.setText(null);
 
-            this.BtNovo.removeActionListener(this.BtNovo.getActionListeners()[0]);
-            this.BtNovo.addActionListener(new ActionListener() {
+            this.btNovo.removeActionListener(this.btNovo.getActionListeners()[0]);
+            this.btNovo.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    BtNovoActionPerformed(e);
+                    btNovoActionPerformed(e);
                 }
             });
-            this.BtNovo.setText("Novo");
+            this.btNovo.setText("Novo");
 
-            this.BtExcluir.removeActionListener(this.BtExcluir.getActionListeners()[0]);
-            this.BtExcluir.addActionListener(new ActionListener() {
+            this.btExcluir.removeActionListener(this.btExcluir.getActionListeners()[0]);
+            this.btExcluir.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    BtExcluirActionPerformed(e);
+                    btExcluirActionPerformed(e);
                 }
             });
-            this.BtExcluir.setText("Excluir");
+            this.btExcluir.setText("Excluir");
 
         }
 
-    }
-
-    public void iniciaSistema() {
-
-        if (Files.exists(verificaSeExiste)) {
-
-            try {
-                /*
-		    * Responsável por carregar o arquivo address.ser
-		    * */
-                FileInputStream fin = new FileInputStream(verificaSeExiste.toString());
-
-                /*
-		    * Responsável por ler o objeto referente ao arquivo
-		    * */
-                ObjectInputStream ois = new ObjectInputStream(fin);
-
-                /*
-		    * Aqui a mágica é feita, onde os bytes presentes no arquivo address.ser
-		    * são convertidos em uma instância de Address.
-		    * */
-                listaUsuarios = (ArrayList) ois.readObject();
-                ois.close();
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    public boolean salvarUsuario() {
-        try {
-
-
-            /*
-		 * A Classe FileOutputStream é responsável por criar
-		 * o arquivo fisicamente no disco, assim poderemos realizar a 
-		 * escrita neste. 
-		 * */
-            FileOutputStream fout = new FileOutputStream(verificaSeExiste.toString());
-
-            /*
-		 * A Classe ObjectOutputStream escreve os objetos no FileOutputStream
-		 * */
-            ObjectOutputStream object = new ObjectOutputStream(fout);
-
-            /*
-		 * Veja aqui a mágica ocorrendo: Estamos gravando um objeto 
-		 * do tipo Address no arquivo address.ser. Atenção: O nosso 
-		 * objeto Address que está sendo gravado, já é gravado de forma 
-		 * serializada
-		 * */
-            object.writeObject(listaUsuarios);
-
-            object.close();
-
-            this.configuraBotao(2);
-
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return false;
     }
 
     /**
@@ -438,17 +337,17 @@ public class TelaUsuarios extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton BtEditar;
-    private javax.swing.JButton BtExcluir;
-    public javax.swing.JButton BtNovo;
-    public javax.swing.JButton BtPesquisar;
-    public javax.swing.JComboBox<ClasseCadastro.Cargo> ComboboxCargo;
-    private javax.swing.JLabel LabelCargo;
-    private javax.swing.JLabel LabelConfirmaSenha;
-    public javax.swing.JPasswordField TxtConfirmaSenha;
-    public javax.swing.JTextField TxtLogin;
-    public javax.swing.JPasswordField TxtSenha;
+    public javax.swing.JButton btEditar;
+    private javax.swing.JButton btExcluir;
+    public javax.swing.JButton btNovo;
+    public javax.swing.JButton btPesquisar;
+    public javax.swing.JComboBox<ClasseCadastro.Cargo> comboboxCargo;
+    private javax.swing.JLabel labelCargo;
+    private javax.swing.JLabel labelConfirmaSenha;
     private javax.swing.JLabel labelLogin;
     private javax.swing.JLabel labelSenha;
+    public javax.swing.JPasswordField txtConfirmaSenha;
+    public javax.swing.JTextField txtLogin;
+    public javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }

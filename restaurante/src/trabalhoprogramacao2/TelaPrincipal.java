@@ -12,7 +12,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import javax.swing.JButton;
 
 /**
@@ -20,9 +19,7 @@ import javax.swing.JButton;
  * @author junio_000
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-
-    public static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-    public static Usuario usuarioSelec = new Usuario();
+   
     GridBagConstraints gridConstraints = new GridBagConstraints();
     private int nextColumnIndex = 1;
 

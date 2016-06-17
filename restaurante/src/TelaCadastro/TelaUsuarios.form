@@ -29,27 +29,27 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="ComboboxCargo" alignment="0" min="-2" pref="106" max="-2" attributes="0"/>
+                          <Component id="comboboxCargo" alignment="0" min="-2" pref="106" max="-2" attributes="0"/>
                           <Component id="labelSenha" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="LabelConfirmaSenha" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="LabelCargo" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelConfirmaSenha" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelCargo" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="labelLogin" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="TxtLogin" alignment="0" max="32767" attributes="0"/>
-                          <Component id="TxtSenha" max="32767" attributes="0"/>
-                          <Component id="TxtConfirmaSenha" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtLogin" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtSenha" max="32767" attributes="0"/>
+                          <Component id="txtConfirmaSenha" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="BtNovo" min="-2" pref="72" max="-2" attributes="0"/>
+                              <Component id="btNovo" min="-2" pref="72" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                              <Component id="BtExcluir" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="btExcluir" min="-2" pref="80" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                              <Component id="BtEditar" min="-2" max="-2" attributes="0"/>
+                              <Component id="btEditar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                              <Component id="BtPesquisar" min="-2" max="-2" attributes="0"/>
+                              <Component id="btPesquisar" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
@@ -64,25 +64,25 @@
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Component id="labelLogin" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="TxtLogin" min="-2" max="-2" attributes="0"/>
+              <Component id="txtLogin" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="labelSenha" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="TxtSenha" min="-2" max="-2" attributes="0"/>
+              <Component id="txtSenha" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="LabelConfirmaSenha" min="-2" max="-2" attributes="0"/>
+              <Component id="labelConfirmaSenha" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="TxtConfirmaSenha" min="-2" max="-2" attributes="0"/>
+              <Component id="txtConfirmaSenha" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-              <Component id="LabelCargo" min="-2" max="-2" attributes="0"/>
+              <Component id="labelCargo" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="ComboboxCargo" min="-2" max="-2" attributes="0"/>
+              <Component id="comboboxCargo" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="BtPesquisar" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="BtExcluir" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="BtNovo" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="BtEditar" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="btPesquisar" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="btExcluir" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="btNovo" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="btEditar" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
           </Group>
@@ -90,7 +90,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JComboBox" name="ComboboxCargo">
+    <Component class="javax.swing.JComboBox" name="comboboxCargo">
       <Properties>
         <Property name="editable" type="boolean" value="true"/>
         <Property name="enabled" type="boolean" value="false"/>
@@ -101,19 +101,19 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="LabelCargo">
+    <Component class="javax.swing.JLabel" name="labelCargo">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cargo:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="BtEditar">
+    <Component class="javax.swing.JButton" name="btEditar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Editar"/>
         <Property name="alignmentY" type="float" value="0.0"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtEditarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btEditarActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -124,19 +124,18 @@
         <Property name="text" type="java.lang.String" value="Login:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="BtPesquisar">
+    <Component class="javax.swing.JButton" name="btPesquisar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Pesquisar"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtPesquisarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btPesquisarActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JTextField" name="TxtLogin">
+    <Component class="javax.swing.JTextField" name="txtLogin">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -149,15 +148,16 @@
         <Property name="text" type="java.lang.String" value="Senha:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="BtExcluir">
+    <Component class="javax.swing.JButton" name="btExcluir">
       <Properties>
         <Property name="text" type="java.lang.String" value="Excluir"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtExcluirActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btExcluirActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="TxtSenha">
+    <Component class="javax.swing.JPasswordField" name="txtSenha">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -165,18 +165,18 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="BtNovo">
+    <Component class="javax.swing.JButton" name="btNovo">
       <Properties>
         <Property name="text" type="java.lang.String" value="Novo"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtNovoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNovoActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="TxtConfirmaSenha">
+    <Component class="javax.swing.JPasswordField" name="txtConfirmaSenha">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -184,7 +184,7 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="LabelConfirmaSenha">
+    <Component class="javax.swing.JLabel" name="labelConfirmaSenha">
       <Properties>
         <Property name="text" type="java.lang.String" value="Confirme a senha:"/>
       </Properties>

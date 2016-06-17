@@ -5,17 +5,10 @@
  */
 package Pesquisa;
 
-import ClasseCadastro.Cargo;
 import ClasseCadastro.Usuario;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import Controller.ControllerUsuario;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import static trabalhoprogramacao2.TelaPrincipal.usuarioSelec;
 
 /**
  *
@@ -23,23 +16,21 @@ import static trabalhoprogramacao2.TelaPrincipal.usuarioSelec;
  */
 public class Pesquisa extends javax.swing.JDialog {
 
-    Path verificaSeExiste = Paths.get("C:\\Users\\Public\\Documents\\usuarios.data");
+    Controller.ControllerUsuario controleUsario = new ControllerUsuario();
     DefaultTableModel modelo;
-    ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-
+    private String NomeUsuarioSelecionado;
+    
     /**
      * Creates new form Pesquisa
      */
-    public Pesquisa(java.awt.Frame parent, boolean modal, int opcao) {
+    public Pesquisa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
         String[] colunas = new String[]{"Login", "Senha", "Cargo"};
         modelo = new DefaultTableModel(null, colunas);
-        Table.setModel(modelo);
-
-        preencheListaUsuario();
-
+        table.setModel(modelo);
+        
+        this.setNomeSelecionado(null);
     }
 
     /**
@@ -51,29 +42,26 @@ public class Pesquisa extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        LabelLogin = new javax.swing.JLabel();
-        TxtLogin = new javax.swing.JTextField();
-        LabelSenha = new javax.swing.JLabel();
-        TxtSenha = new javax.swing.JTextField();
-        BtPesquisar = new javax.swing.JButton();
+        tabelLogin = new javax.swing.JLabel();
+        txtLogin = new javax.swing.JTextField();
+        btPesquisar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Table = new javax.swing.JTable();
+        table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisa de Usuário");
+        setResizable(false);
 
-        LabelLogin.setText("Login:");
+        tabelLogin.setText("Login:");
 
-        LabelSenha.setText("Senha:");
-
-        BtPesquisar.setText("Pesquisar");
-        BtPesquisar.addActionListener(new java.awt.event.ActionListener() {
+        btPesquisar.setText("Pesquisar");
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtPesquisarActionPerformed(evt);
+                btPesquisarActionPerformed(evt);
             }
         });
 
-        Table.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -92,13 +80,13 @@ public class Pesquisa extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        Table.getTableHeader().setReorderingAllowed(false);
-        Table.addMouseListener(new java.awt.event.MouseAdapter() {
+        table.getTableHeader().setReorderingAllowed(false);
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 seleciona(evt);
             }
         });
-        jScrollPane1.setViewportView(Table);
+        jScrollPane1.setViewportView(table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,19 +97,12 @@ public class Pesquisa extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addComponent(BtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(LabelLogin))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(LabelSenha)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TxtLogin)
-                            .addComponent(TxtSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE))))
+                        .addContainerGap()
+                        .addComponent(tabelLogin)
+                        .addGap(7, 7, 7)
+                        .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -129,83 +110,64 @@ public class Pesquisa extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LabelLogin)
-                    .addComponent(TxtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LabelSenha)
-                    .addComponent(TxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtPesquisar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(tabelLogin)
+                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(btPesquisar)
+                .addGap(10, 10, 10)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtPesquisarActionPerformed
-        modelo.getDataVector().removeAllElements();
 
-        if (!listaUsuarios.isEmpty()) {// aki verifica se a list nao esta vazia
-            for (int i = 0; i < listaUsuarios.size(); i++) {// aki ele percorre minha list
-                final Usuario usuario = listaUsuarios.get(i);
-                if (TxtLogin.getText().isEmpty()) {
-                    modelo.addRow(new Object[]{usuario.getLogin(), usuario.getSenha(), usuario.getCargo()});// adiciona na jtbale
-                } else if (TxtLogin.getText().equalsIgnoreCase(usuario.getLogin())) {
-                    modelo.addRow(new Object[]{usuario.getLogin(), usuario.getSenha(), usuario.getCargo()});
+    private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
+        this.modelo.getDataVector().removeAllElements();
+
+        if (this.controleUsario.listaUsuarioVazia()) {
+
+            Usuario usuarioSelecionado;
+
+            if (!(this.txtLogin.getText().isEmpty())) {
+
+                usuarioSelecionado = this.controleUsario.pesquisarUsuario(this.txtLogin.getText());
+                modelo.addRow(new Object[]{usuarioSelecionado.getLogin(), usuarioSelecionado.getSenha(), usuarioSelecionado.getCargo()});
+
+            } else {
+
+                List<Usuario> lista = this.controleUsario.listatodosUsuarios();
+                for (int i = 0; i < lista.size(); i++) {
+
+                    modelo.addRow(new Object[]{lista.get(i).getLogin(), lista.get(i).getSenha(), lista.get(i).getCargo()});
                 }
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Nenhum usuário cadastrado!");
         }
 
-    }//GEN-LAST:event_BtPesquisarActionPerformed
+    }//GEN-LAST:event_btPesquisarActionPerformed
 
     private void seleciona(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleciona
 
         if (evt.getClickCount() == 1) {
 
-            int selecionado = Table.getSelectedRow();
-            if (selecionado != -1) {
+            int selecionado = table.getSelectedRow();
 
-                usuarioSelec.setLogin(Table.getValueAt(selecionado, 0).toString());
-                usuarioSelec.setSenha(Table.getValueAt(selecionado, 1).toString());
-                usuarioSelec.setCargo((Cargo) Table.getValueAt(selecionado, 2));
-                this.dispose();
+            if (selecionado != -1) {
+            this.setNomeSelecionado(table.getValueAt(selecionado, 0).toString());
+            this.dispose();
 
             }
         }
     }//GEN-LAST:event_seleciona
-
-    public void preencheListaUsuario() {
-
-        if (Files.exists(verificaSeExiste)) {
-            try {
-                /*
-             * Responsável por carregar o arquivo address.ser
-             * */
-                FileInputStream fin = new FileInputStream(verificaSeExiste.toString());
-
-                /*
-             * Responsável por ler o objeto referente ao arquivo
-             * */
-                ObjectInputStream ois = new ObjectInputStream(fin);
-
-                /*
-             * Aqui a mágica é feita, onde os bytes presentes no arquivo address.ser
-             * são convertidos em uma instância de Address.
-             * */
-                listaUsuarios = (ArrayList) ois.readObject();
-                ois.close();
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
+    
+    private void setNomeSelecionado(String nome){
+        this.NomeUsuarioSelecionado = nome;
     }
-
+    
+    public String getNomeSelecionado(){
+        return this.NomeUsuarioSelecionado;
+    }
     /**
      * @param args the command line arguments
      */
@@ -236,7 +198,7 @@ public class Pesquisa extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Pesquisa dialog = new Pesquisa(new javax.swing.JFrame(), true, 0);
+                Pesquisa dialog = new Pesquisa(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -249,12 +211,10 @@ public class Pesquisa extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtPesquisar;
-    private javax.swing.JLabel LabelLogin;
-    private javax.swing.JLabel LabelSenha;
-    private javax.swing.JTable Table;
-    private javax.swing.JTextField TxtLogin;
-    private javax.swing.JTextField TxtSenha;
+    private javax.swing.JButton btPesquisar;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel tabelLogin;
+    private javax.swing.JTable table;
+    private javax.swing.JTextField txtLogin;
     // End of variables declaration//GEN-END:variables
 }
