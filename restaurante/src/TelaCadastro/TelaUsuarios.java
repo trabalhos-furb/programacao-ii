@@ -11,7 +11,10 @@ import Controller.ControllerUsuario;
 import Pesquisa.Pesquisa;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 
 /**
  *
@@ -187,6 +190,7 @@ public class TelaUsuarios extends javax.swing.JDialog {
 
         if (!(pesquisar.getNomeSelecionado().isEmpty())) {
             Usuario usuarioSelecionado = controleUsario.pesquisarUsuario(pesquisar.getNomeSelecionado());
+
             txtLogin.setText(usuarioSelecionado.getLogin());
             txtSenha.setText(usuarioSelecionado.getSenha());
             comboboxCargo.setSelectedItem(usuarioSelecionado.getCargo());

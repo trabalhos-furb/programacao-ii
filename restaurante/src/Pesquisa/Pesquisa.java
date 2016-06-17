@@ -19,7 +19,7 @@ public class Pesquisa extends javax.swing.JDialog {
     Controller.ControllerUsuario controleUsario = new ControllerUsuario();
     DefaultTableModel modelo;
     private String NomeUsuarioSelecionado;
-    
+
     /**
      * Creates new form Pesquisa
      */
@@ -30,7 +30,7 @@ public class Pesquisa extends javax.swing.JDialog {
         modelo = new DefaultTableModel(null, colunas);
         table.setModel(modelo);
         
-        this.setNomeSelecionado(null);
+        this.setNomeSelecionado("");
     }
 
     /**
@@ -133,11 +133,13 @@ public class Pesquisa extends javax.swing.JDialog {
             if (!(this.txtLogin.getText().isEmpty())) {
 
                 usuarioSelecionado = this.controleUsario.pesquisarUsuario(this.txtLogin.getText());
-                modelo.addRow(new Object[]{usuarioSelecionado.getLogin(), usuarioSelecionado.getSenha(), usuarioSelecionado.getCargo()});
-
+                if (!(usuarioSelecionado == null)) {
+                    modelo.addRow(new Object[]{usuarioSelecionado.getLogin(), usuarioSelecionado.getSenha(), usuarioSelecionado.getCargo()});
+                }
             } else {
 
                 List<Usuario> lista = this.controleUsario.listatodosUsuarios();
+
                 for (int i = 0; i < lista.size(); i++) {
 
                     modelo.addRow(new Object[]{lista.get(i).getLogin(), lista.get(i).getSenha(), lista.get(i).getCargo()});
@@ -154,20 +156,21 @@ public class Pesquisa extends javax.swing.JDialog {
             int selecionado = table.getSelectedRow();
 
             if (selecionado != -1) {
-            this.setNomeSelecionado(table.getValueAt(selecionado, 0).toString());
-            this.dispose();
+                this.setNomeSelecionado(table.getValueAt(selecionado, 0).toString());
+                this.dispose();
 
             }
         }
     }//GEN-LAST:event_seleciona
-    
-    private void setNomeSelecionado(String nome){
+
+    private void setNomeSelecionado(String nome) {
         this.NomeUsuarioSelecionado = nome;
     }
-    
-    public String getNomeSelecionado(){
+
+    public String getNomeSelecionado() {
         return this.NomeUsuarioSelecionado;
     }
+
     /**
      * @param args the command line arguments
      */

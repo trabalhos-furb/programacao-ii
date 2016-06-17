@@ -5,21 +5,27 @@
  */
 package trabalhoprogramacao2;
 
-import ClasseCadastro.Usuario;
+import Controller.ControllerUsuario;
 import TelaCadastro.TelaUsuarios;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 
 /**
  *
  * @author junio_000
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-   
+
+    Controller.ControllerUsuario controleUsuario = new ControllerUsuario();
     GridBagConstraints gridConstraints = new GridBagConstraints();
     private int nextColumnIndex = 1;
 
@@ -32,6 +38,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         gridConstraints.ipadx = 45;
         gridConstraints.ipady = 45;
         addJButton();
+
+        this.logarSistema();
     }
 
     /**
@@ -42,7 +50,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -75,6 +82,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        loginMenu = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tela principal");
@@ -275,6 +286,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        loginMenu.setText("Login");
+        loginMenu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jMenuBar1.add(Box.createHorizontalGlue());
+
+        jMenuItem4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        loginMenu.add(jMenuItem4);
+
+        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        loginMenu.add(jMenuItem5);
+
+        jMenuItem6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenuItem6.setText("Logoff");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        loginMenu.add(jMenuItem6);
+
+        jMenuBar1.add(loginMenu);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -342,7 +374,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
-                                .addComponent(btFecharMesa, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                                .addComponent(btFecharMesa, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(9, 9, 9)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -364,6 +396,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaUsuario.setModal(true);
         telaUsuario.setVisible(true); //Chama a dialog
 
+        this.controleUsuario.carregaListaUsuario();
+        if (!(this.controleUsuario.usuarioLogado.getLogin().equalsIgnoreCase("Suporte"))) {
+            if (this.controleUsuario.verificaUsuarioLogado()) {
+                JOptionPane.showMessageDialog(null, "Usuário foi removido, para continuar entre com outro usuário!");
+                this.logarSistema();
+            }
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -393,6 +432,39 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        this.controleUsuario.Deslogar();
+        JOptionPane.showMessageDialog(null, "Usuário desconectado com sucesso!");
+        this.logarSistema();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    public void logarSistema() {
+        TelaLogin TelaLogin = new TelaLogin(this, rootPaneCheckingEnabled);
+
+        TelaLogin.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); //Desativa X padrão
+        TelaLogin.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                if (JOptionPane.showConfirmDialog(null, "Se confirmar de sair fechara o sistema, você quer sair?", "Atenção", JOptionPane.YES_NO_OPTION) == 0) {
+                    System.exit(0);
+                }
+            }
+        });
+
+        TelaLogin.setLocationRelativeTo(null);
+        TelaLogin.setModal(true);
+        this.setVisible(false);
+        TelaLogin.setVisible(true);
+
+        if (TelaLogin.getLogin().isEmpty()) {
+            this.dispose();
+        } else {
+            this.controleUsuario.logar(TelaLogin.getLogin(), TelaLogin.getSenha());
+            this.jMenuItem4.setText("Login: " + this.controleUsuario.usuarioLogado.getLogin());
+            this.jMenuItem5.setText("Cargo: " + this.controleUsuario.usuarioLogado.getCargo());
+            this.setVisible(true);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -440,7 +512,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButton.setText(String.valueOf(buttonNumber));
         jButton.setFont(new Font(jButton.getFont().getName(), Font.PLAIN, 20));
         jButton.setMinimumSize(new Dimension(45, 45));
-        jButton.setMaximumSize(new Dimension(45,45));
+        jButton.setMaximumSize(new Dimension(45, 45));
         jButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -474,6 +546,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -483,6 +558,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField lbValorProduto;
     private javax.swing.JTextField lbValorTotalMesa;
+    private javax.swing.JMenu loginMenu;
     private javax.swing.JPanel panelMesas;
     private javax.swing.JSpinner quantidadeProduto;
     private javax.swing.JTable tabelaProdutos;

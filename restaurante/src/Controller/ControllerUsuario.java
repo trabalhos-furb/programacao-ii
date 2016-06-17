@@ -19,15 +19,20 @@ public class ControllerUsuario {
     private boolean logado;
     Path verificaSeExiste = Paths.get("./src/Banco de Dados/usuarios.data");
     private HashMap<String, Usuario> listaUsuarios;
+    public Usuario usuarioLogado;
 
     public ControllerUsuario() {
         this.setLogado(false);
+        usuarioLogado = new Usuario();
         listaUsuarios = new HashMap<>();
         this.carregaListaUsuario();
     }
 
     public Usuario pesquisarUsuario(String nome) {
         Usuario usuario = listaUsuarios.get(nome);
+        if (listaUsuarios.get(nome) == null) {
+            JOptionPane.showMessageDialog(null, "Usuário não foi encontrado!");
+        }
         return usuario;
     }
 
@@ -50,7 +55,7 @@ public class ControllerUsuario {
     }
 
     public void gravarUsuario(String nome, String senha, Cargo cargo) {
-
+        
         if (listaUsuarios.containsKey(nome)) {
             if (JOptionPane.showConfirmDialog(null, "Deseja realmente alterar os dados?", "Atenção", JOptionPane.YES_NO_OPTION) == 0) {
                 listaUsuarios.get(nome).setLogin(nome);
@@ -106,6 +111,39 @@ public class ControllerUsuario {
         }
     }
 
+    public boolean verificaUsuarioLogado(){
+        if (listaUsuarios.get(this.usuarioLogado.getLogin()) == null) {
+            return true;
+        }
+        return false;
+    }
+    
+    public void logar(String nome, String senha) {
+
+        if (nome.equalsIgnoreCase("Suporte") && senha.equals("123456")) {
+            usuarioLogado.setLogin("Suporte");
+            usuarioLogado.setCargo(Cargo.GERENTE);
+            usuarioLogado.setSenha("123456");
+            this.setLogado(true);
+        } else if (this.listaUsuarioVazia()) {
+            if (!(this.pesquisarUsuario(nome) == null)) {
+                usuarioLogado = this.pesquisarUsuario(nome);
+                if (usuarioLogado.getSenha().equals(senha)) {
+                    this.setLogado(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Senha incorreta!");
+                }
+            }
+        }
+    }
+
+    public void Deslogar() {
+        this.setLogado(false);
+        usuarioLogado.setLogin(null);
+        usuarioLogado.setSenha(null);
+        usuarioLogado.setCargo(Cargo.GARCOM);
+    }
+
     /**
      * @return the logado
      */
@@ -119,5 +157,5 @@ public class ControllerUsuario {
     private void setLogado(boolean logado) {
         this.logado = logado;
     }
-
+ 
 }
