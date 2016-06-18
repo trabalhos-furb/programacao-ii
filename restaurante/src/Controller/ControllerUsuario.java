@@ -29,8 +29,8 @@ public class ControllerUsuario {
     }
 
     public Usuario pesquisarUsuario(String nome) {
-        Usuario usuario = listaUsuarios.get(nome);
-        if (listaUsuarios.get(nome) == null) {
+        Usuario usuario = listaUsuarios.get(nome.toUpperCase());
+        if (listaUsuarios.get(nome.toUpperCase()) == null) {
             JOptionPane.showMessageDialog(null, "Usuário não foi encontrado!");
         }
         return usuario;
@@ -50,24 +50,24 @@ public class ControllerUsuario {
     }
 
     public void removeUsuario(String nome) {
-        listaUsuarios.remove(nome);
+        listaUsuarios.remove(nome.toUpperCase());
         this.salvarUsuario("REMOVE");
     }
 
     public void gravarUsuario(String nome, String senha, Cargo cargo) {
         
-        if (listaUsuarios.containsKey(nome)) {
+        if (listaUsuarios.containsKey(nome.toUpperCase())) {
             if (JOptionPane.showConfirmDialog(null, "Deseja realmente alterar os dados?", "Atenção", JOptionPane.YES_NO_OPTION) == 0) {
-                listaUsuarios.get(nome).setLogin(nome);
-                listaUsuarios.get(nome).setSenha(senha);
-                listaUsuarios.get(nome).setCargo(cargo);
+                listaUsuarios.get(nome.toUpperCase()).setLogin(nome);
+                listaUsuarios.get(nome.toUpperCase()).setSenha(senha);
+                listaUsuarios.get(nome.toUpperCase()).setCargo(cargo);
                 this.salvarUsuario("SALVAR");
             }
 
         } else {
 
             Usuario usu = new Usuario(nome, senha, cargo);
-            listaUsuarios.put(nome, usu);
+            listaUsuarios.put(nome.toUpperCase(), usu);
             this.salvarUsuario("SALVAR");
         }
     }
@@ -126,8 +126,8 @@ public class ControllerUsuario {
             usuarioLogado.setSenha("123456");
             this.setLogado(true);
         } else if (this.listaUsuarioVazia()) {
-            if (!(this.pesquisarUsuario(nome) == null)) {
-                usuarioLogado = this.pesquisarUsuario(nome);
+            if (!(this.pesquisarUsuario(nome.toUpperCase()) == null)) {
+                usuarioLogado = this.pesquisarUsuario(nome.toUpperCase());
                 if (usuarioLogado.getSenha().equals(senha)) {
                     this.setLogado(true);
                 } else {

@@ -6,6 +6,7 @@
 package trabalhoprogramacao2;
 
 import Controller.ControllerUsuario;
+import TelaCadastro.TelaProduto;
 import TelaCadastro.TelaUsuarios;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -406,7 +407,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+        TelaProduto TelaProduto = new TelaProduto(this, true);
+        TelaProduto.setLocationRelativeTo(null);
+        TelaProduto.setModal(true);
+        TelaProduto.setVisible(true); //Chama a dialog
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void lbValorProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbValorProdutoActionPerformed

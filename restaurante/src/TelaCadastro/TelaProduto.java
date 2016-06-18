@@ -5,11 +5,20 @@
  */
 package TelaCadastro;
 
+import ClasseCadastro.Produto;
+import Controller.controllerProduto;
+import Pesquisa.PesquisaProduto;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Vanila
  */
 public class TelaProduto extends javax.swing.JDialog {
+
+    controllerProduto controleProdutos = new controllerProduto();
 
     /**
      * Creates new form TelaProduto
@@ -17,6 +26,9 @@ public class TelaProduto extends javax.swing.JDialog {
     public TelaProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        this.txtValor.setDocument(new soNumeros());
+        this.txtCodigo.setDocument(new soNumeros());
     }
 
     /**
@@ -28,21 +40,249 @@ public class TelaProduto extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        labelCodigo = new javax.swing.JLabel();
+        txtCodigo = new javax.swing.JTextField();
+        labelDescricao = new javax.swing.JLabel();
+        labelValor = new javax.swing.JLabel();
+        txtValor = new javax.swing.JTextField();
+        labelValor2 = new javax.swing.JLabel();
+        btNovo = new javax.swing.JButton();
+        btExcluir = new javax.swing.JButton();
+        btEditar = new javax.swing.JButton();
+        btPesquisar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDescricao = new javax.swing.JTextPane();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastro de Produto");
+        setResizable(false);
+
+        labelCodigo.setText("Código:");
+
+        txtCodigo.setEnabled(false);
+
+        labelDescricao.setText("Descrição:");
+
+        labelValor.setText("Valor:");
+
+        txtValor.setEnabled(false);
+
+        labelValor2.setText("R$");
+
+        btNovo.setText("Novo");
+        btNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNovoActionPerformed(evt);
+            }
+        });
+
+        btExcluir.setText("Excluir");
+        btExcluir.setEnabled(false);
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
+            }
+        });
+
+        btEditar.setText("Editar");
+        btEditar.setEnabled(false);
+        btEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEditarActionPerformed(evt);
+            }
+        });
+
+        btPesquisar.setText("Pesquisar");
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarActionPerformed(evt);
+            }
+        });
+
+        txtDescricao.setEnabled(false);
+        jScrollPane1.setViewportView(txtDescricao);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelDescricao)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelCodigo))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(labelValor)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(labelValor2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtValor))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btNovo)
+                                .addGap(1, 1, 1)
+                                .addComponent(btExcluir)
+                                .addGap(1, 1, 1)
+                                .addComponent(btEditar)
+                                .addGap(1, 1, 1)
+                                .addComponent(btPesquisar)))
+                        .addGap(10, 10, 10))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelCodigo)
+                    .addComponent(labelValor))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelValor2)
+                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addComponent(labelDescricao)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btNovo)
+                    .addComponent(btExcluir)
+                    .addComponent(btEditar)
+                    .addComponent(btPesquisar))
+                .addGap(10, 10, 10))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
+        this.configuraBotao(1);
+    }//GEN-LAST:event_btNovoActionPerformed
+
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        controleProdutos.removeProduto(Integer.parseInt(this.txtCodigo.getText()));
+        this.configuraBotao(2);
+    }//GEN-LAST:event_btExcluirActionPerformed
+
+    private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
+        this.configuraBotao(1);
+        this.btEditar.setEnabled(false);
+    }//GEN-LAST:event_btEditarActionPerformed
+
+    private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
+        PesquisaProduto pesquisar = new PesquisaProduto(null, true);
+
+        pesquisar.setLocationRelativeTo(null);
+        pesquisar.setModal(true);
+        pesquisar.setVisible(true);
+
+        if (!(pesquisar.getProdutoSelecionado() == 0)) {
+            Produto produtoSelecionado = controleProdutos.pesquisarProduto(pesquisar.getProdutoSelecionado());
+
+            this.txtCodigo.setText(Integer.toString(produtoSelecionado.getCodigo()));
+            this.txtDescricao.setText(produtoSelecionado.getDescricao());
+            this.txtValor.setText(Float.toString(produtoSelecionado.getValor()));
+
+            this.btEditar.setEnabled(true);
+            this.btExcluir.setEnabled(true);
+        }
+
+
+    }//GEN-LAST:event_btPesquisarActionPerformed
+
+    private void BtgravarActionPerformed(java.awt.event.ActionEvent evt) {
+
+        if (this.txtCodigo.getText().isEmpty() || this.txtDescricao.getText().isEmpty() || this.txtValor.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Existe campo vazio verifique!");
+        } else {
+
+            controleProdutos.gravarProduto(Integer.parseInt(this.txtCodigo.getText()), this.txtDescricao.getText(), Float.parseFloat(this.txtValor.getText()));
+            this.configuraBotao(2);
+        }
+    }
+
+    private void BtCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+        if (JOptionPane.showConfirmDialog(null, "Deseja realmente cancelar?", "Atenção", JOptionPane.YES_NO_OPTION) == 0) {
+            txtCodigo.setText(null);
+            txtDescricao.setText(null);
+            txtValor.setText(null);
+            configuraBotao(2);
+        }
+    }
+
+    private void configuraBotao(int opcao) {
+
+        if (opcao == 1) {
+
+            this.btPesquisar.setEnabled(false);
+            this.txtCodigo.setEnabled(true);
+            this.txtDescricao.setEnabled(true);
+            this.txtValor.setEnabled(true);
+            this.btExcluir.setEnabled(true);
+
+            this.btNovo.removeActionListener(this.btNovo.getActionListeners()[0]);
+            this.btNovo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    BtgravarActionPerformed(e);
+                }
+            });
+            this.btNovo.setText("Gravar");
+
+            this.btExcluir.removeActionListener(this.btExcluir.getActionListeners()[0]);
+            this.btExcluir.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    BtCancelarActionPerformed(e);
+                }
+            });
+
+            this.btExcluir.setText("Cancelar");
+
+        } else {
+
+            this.btPesquisar.setEnabled(true);
+            this.txtCodigo.setEnabled(false);
+            this.txtDescricao.setEnabled(false);
+            this.txtValor.setEnabled(false);
+            this.btEditar.setEnabled(false);
+            this.txtCodigo.setText(null);
+            this.txtDescricao.setText(null);
+            this.btExcluir.setEnabled(false);
+            this.txtValor.setText(null);
+
+            this.btNovo.removeActionListener(this.btNovo.getActionListeners()[0]);
+            this.btNovo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    btNovoActionPerformed(e);
+                }
+            });
+            this.btNovo.setText("Novo");
+
+            this.btExcluir.removeActionListener(this.btExcluir.getActionListeners()[0]);
+            this.btExcluir.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    btExcluirActionPerformed(e);
+                }
+            });
+            this.btExcluir.setText("Excluir");
+
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -87,5 +327,17 @@ public class TelaProduto extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btEditar;
+    private javax.swing.JButton btExcluir;
+    private javax.swing.JButton btNovo;
+    private javax.swing.JButton btPesquisar;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelCodigo;
+    private javax.swing.JLabel labelDescricao;
+    private javax.swing.JLabel labelValor;
+    private javax.swing.JLabel labelValor2;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextPane txtDescricao;
+    private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }

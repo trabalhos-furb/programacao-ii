@@ -5,11 +5,13 @@
  */
 package ClasseCadastro;
 
+import java.io.Serializable;
+
 /**
  *
  * @author junio_000
  */
-public class Produto {
+public class Produto implements Serializable{
 
     private int codigo;
     private String descricao;
@@ -44,5 +46,15 @@ public class Produto {
     public void setValor(float valor) {
         this.valor = valor;
     }
+
+        @Override
+	   public String toString() {
+    	   return new StringBuffer(" Código : ")
+    	   .append(this.codigo)
+    	   .append(" Descrição : ")
+    	   .append(this.descricao)
+           .append(" Valor R$: ")
+           .append(this.valor).toString();
+	   }
 
 }
