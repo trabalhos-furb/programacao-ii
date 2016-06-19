@@ -63,7 +63,6 @@ public class ControllerUsuario {
                 listaUsuarios.get(nome.toUpperCase()).setCargo(cargo);
                 this.salvarUsuario("SALVAR");
             }
-
         } else {
 
             Usuario usu = new Usuario(nome, senha, cargo);
