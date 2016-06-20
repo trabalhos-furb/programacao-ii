@@ -5,11 +5,13 @@
  */
 package ClasseCadastro;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jmkuntz
  */
-public enum Cargo {
+public enum Cargo implements Serializable {
     GARCOM("Garçom"), CAIXA("Caixa"), GERENTE("Gerente");
     
     private String cargo;

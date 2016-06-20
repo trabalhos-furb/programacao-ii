@@ -5,6 +5,7 @@
  */
 package ClasseCadastro;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,24 +13,20 @@ import java.util.List;
  *
  * @author junio_000
  */
-public class Mesa {
+public class Mesa implements Serializable {
 
     private int numero;
     private Status status;
-    private final List<Produto> produtos;
+    private final List<Pedido> pedidos;
 
     public Mesa(int numero, Status status) {
         this.numero = numero;
         this.status = status;
-        this.produtos = new ArrayList<>();
+        this.pedidos = new ArrayList<>();
     }
 
     public int getNumero() {
         return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
     }
 
     public Status getStatus() {
@@ -40,14 +37,14 @@ public class Mesa {
         this.status = status;
     }
 
-    public void addProduto(Produto p) {
-        produtos.add(p);
+    public void addPedido(Pedido p) {
+        pedidos.add(p);
     }
     
-    public double getValorTotal() {
+    public double calcularValorTotal() {
         double total = 0;
-        for (Produto produto : produtos) {
-            total += produto.getValor();
+        for (Pedido produto : pedidos) {
+            total += produto.calculaValorTotal();
         }
         return total;
     }

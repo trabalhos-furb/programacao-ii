@@ -6,17 +6,13 @@
 package trabalhoprogramacao2;
 
 import Controller.ControllerUsuario;
+import Controller.MesaController;
 import TelaCadastro.TelaProduto;
 import TelaCadastro.TelaUsuarios;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.Box;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
@@ -27,19 +23,14 @@ import javax.swing.WindowConstants;
 public class TelaPrincipal extends javax.swing.JFrame {
 
     Controller.ControllerUsuario controleUsuario = new ControllerUsuario();
-    GridBagConstraints gridConstraints = new GridBagConstraints();
-    private int nextColumnIndex = 1;
+    private final MesaController mesaController;
 
     /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
         initComponents();
-        gridConstraints.fill = GridBagConstraints.BOTH;
-        gridConstraints.ipadx = 45;
-        gridConstraints.ipady = 45;
-        addJButton();
-
+        mesaController = new MesaController(panelMesas);
         this.logarSistema();
     }
 
@@ -503,31 +494,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 new TelaPrincipal().setVisible(true);
             }
         });
-    }
-
-    private void addJButton() {
-        gridConstraints.gridwidth = nextColumnIndex % 5; //Somente 5 colunas
-        panelMesas.add(getJButton(nextColumnIndex), gridConstraints);
-        nextColumnIndex++;
-    }
-
-    private JButton getJButton(int buttonNumber) {
-        JButton jButton = new JButton();
-        jButton.setText(String.valueOf(buttonNumber));
-        jButton.setFont(new Font(jButton.getFont().getName(), Font.PLAIN, 20));
-        jButton.setMinimumSize(new Dimension(45, 45));
-        jButton.setMaximumSize(new Dimension(45, 45));
-        jButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                addJButton();
-                panelMesas.revalidate();
-                panelMesas.repaint();
-                super.mouseClicked(e);
-            }
-        });
-//		jButton.setBackground(Color.BLUE);
-        return jButton;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,10 +5,12 @@
  */
 package ClasseCadastro;
 
+import java.io.Serializable;
+
 /**
  *
  * @author junio_000
  */
-enum Status {
+public enum Status implements Serializable {
     DISPONIVEL, RESERVADO, OCUPADO;
 }
