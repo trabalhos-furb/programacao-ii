@@ -10,6 +10,7 @@ import ClasseCadastro.Produto;
 import Controller.ControllerUsuario;
 import Controller.MesaController;
 import Controller.ControllerProduto;
+import Pesquisa.PesquisaProduto;
 import TelaCadastro.TelaProduto;
 import TelaCadastro.TelaUsuarios;
 import java.awt.event.WindowAdapter;
@@ -220,9 +221,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         btFecharMesa.setText("Fechar conta");
+        btFecharMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btFecharMesaActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Produto:");
 
+        codigoProduto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                codigoProdutoFocusGained(evt);
+            }
+        });
         codigoProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 codigoProdutoActionPerformed(evt);
@@ -454,6 +465,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         atualizaValorProduto();
     }//GEN-LAST:event_codigoProdutoActionPerformed
+
+    private void btFecharMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharMesaActionPerformed
+        if (new TelaPagamento(this, this.mesaController.getValorTotalMesa()).success()) {
+            this.mesaController.fecharMesa();
+        }
+    }//GEN-LAST:event_btFecharMesaActionPerformed
+
+    private void codigoProdutoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_codigoProdutoFocusGained
+        produtoSelecionado = new PesquisaProduto(null).getProdutoSelecionado();
+    }//GEN-LAST:event_codigoProdutoFocusGained
 
     private void atualizaValorProduto() {
         if (produtoSelecionado == null) {

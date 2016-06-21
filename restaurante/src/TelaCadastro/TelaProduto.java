@@ -181,14 +181,10 @@ public class TelaProduto extends javax.swing.JDialog {
     }//GEN-LAST:event_btEditarActionPerformed
 
     private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
-        PesquisaProduto pesquisar = new PesquisaProduto(null, true);
+        PesquisaProduto pesquisar = new PesquisaProduto(null);
 
-        pesquisar.setLocationRelativeTo(null);
-        pesquisar.setModal(true);
-        pesquisar.setVisible(true);
-
-        if (!(pesquisar.getProdutoSelecionado() == 0)) {
-            Produto produtoSelecionado = controleProdutos.pesquisarProduto(pesquisar.getProdutoSelecionado());
+            Produto produtoSelecionado = pesquisar.getProdutoSelecionado();
+        if (produtoSelecionado != null) {
 
             this.txtCodigo.setText(Integer.toString(produtoSelecionado.getCodigo()));
             this.txtDescricao.setText(produtoSelecionado.getDescricao());

@@ -39,6 +39,7 @@ public class Mesa implements Serializable {
 
     public void addPedido(Pedido p) {
         pedidos.add(p);
+        status = Status.OCUPADO;
     }
     
     public int getQuantidadePedidos() {
@@ -59,6 +60,11 @@ public class Mesa implements Serializable {
 
     public void removePedido(int pedido) {
         this.pedidos.remove(pedido);
+    }
+
+    public void limparPedidos() {
+        this.pedidos.clear();
+        this.status = Status.DISPONIVEL;
     }
     
 }

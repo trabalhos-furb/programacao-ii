@@ -18,20 +18,21 @@ public class PesquisaProduto extends javax.swing.JDialog {
 
     ControllerProduto controleProduto = new ControllerProduto();
     DefaultTableModel modelo;
-    private int codigoProduto;
+    private Produto produtoSelecionado = null;
 
     /**
      * Creates new form PesquisaProduto
      */
-    public PesquisaProduto(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public PesquisaProduto(java.awt.Frame parent) {
+        super(parent, true);
         initComponents();
 
         String[] colunas = new String[]{"Código", "Descrição", "Preço R$"};
         modelo = new DefaultTableModel(null, colunas);
         table.setModel(modelo);
 
-        this.setProdutoSelecionado(0);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     /**
@@ -166,30 +167,34 @@ public class PesquisaProduto extends javax.swing.JDialog {
 
                 if (this.txtpreco.getText().isEmpty() && !this.txtDescricao.getText().isEmpty()) {
                     for (int i = 0; i < lista.size(); i++) {
+                        final Produto produto = lista.get(i);
 
-                        if (lista.get(i).getDescricao().equalsIgnoreCase(this.txtDescricao.getText())) {
-                            modelo.addRow(new Object[]{lista.get(i).getCodigo(), lista.get(i).getDescricao(), lista.get(i).getValor()});
+                        if (produto.getDescricao().equalsIgnoreCase(this.txtDescricao.getText())) {
+                            modelo.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValor()});
                         }
                     }
                 } else if (!this.txtpreco.getText().isEmpty() && this.txtDescricao.getText().isEmpty()) {
                     for (int i = 0; i < lista.size(); i++) {
+                        final Produto produto = lista.get(i);
 
-                        if (lista.get(i).getValor() == Float.parseFloat(this.txtpreco.getText())) {
-                            modelo.addRow(new Object[]{lista.get(i).getCodigo(), lista.get(i).getDescricao(), lista.get(i).getValor()});
+                        if (produto.getValor() == Float.parseFloat(this.txtpreco.getText())) {
+                            modelo.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValor()});
                         }
                     }
                 } else if (!this.txtpreco.getText().isEmpty() && !this.txtDescricao.getText().isEmpty()) {
 
                     for (int i = 0; i < lista.size(); i++) {
+                        final Produto produto = lista.get(i);
 
-                        if (lista.get(i).getValor() == Float.parseFloat(this.txtpreco.getText()) && lista.get(i).getDescricao().equalsIgnoreCase(this.txtDescricao.getText())) {
-                            modelo.addRow(new Object[]{lista.get(i).getCodigo(), lista.get(i).getDescricao(), lista.get(i).getValor()});
+                        if (produto.getValor() == Float.parseFloat(this.txtpreco.getText()) && produto.getDescricao().equalsIgnoreCase(this.txtDescricao.getText())) {
+                            modelo.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValor()});
                         }
                     }
 
                 } else {
                     for (int i = 0; i < lista.size(); i++) {
-                        modelo.addRow(new Object[]{lista.get(i).getCodigo(), lista.get(i).getDescricao(), lista.get(i).getValor()});
+                        final Produto produto = lista.get(i);
+                        modelo.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValor()});
                     }
                 }
             }
@@ -202,69 +207,15 @@ public class PesquisaProduto extends javax.swing.JDialog {
             int selecionado = table.getSelectedRow();
 
             if (selecionado != -1) {
-                this.setProdutoSelecionado((int) table.getValueAt(selecionado, 0));
+                this.produtoSelecionado = this.controleProduto.pesquisarProduto((int) table.getValueAt(selecionado, 0));
                 this.dispose();
 
             }
         }
     }//GEN-LAST:event_tableMouseClicked
 
-    public int getProdutoSelecionado() {
-        return codigoProduto;
-    }
-
-    private void setProdutoSelecionado(int codigo) {
-        this.codigoProduto = codigo;
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PesquisaProduto.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PesquisaProduto.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PesquisaProduto.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PesquisaProduto.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                PesquisaProduto dialog = new PesquisaProduto(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+    public Produto getProdutoSelecionado() {
+        return produtoSelecionado;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -10,16 +10,23 @@ import ClasseCadastro.Pedido;
 import ClasseCadastro.Persistence;
 import ClasseCadastro.Status;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -78,6 +85,9 @@ public class MesaController {
         jButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    showPopupMenu(e);
+                }
                 setMesaSelecionada((JButton) e.getSource());
                 atualizaTabelaProdutos();
                 super.mouseClicked(e);
@@ -85,6 +95,39 @@ public class MesaController {
         });
         jButton.setBackground(getCorBotao(mesa.getStatus()));
         return jButton;
+    }
+
+    private void showPopupMenu(MouseEvent e) {
+        JPopupMenu jPopupMenu = new JPopupMenu("Teste");
+
+        final JMenu statusMenu = new JMenu("Alterar status");
+
+        final JMenuItem menuDisponivel = new JMenuItem("Disponivel");
+        menuDisponivel.addActionListener((ActionEvent ae) -> {
+            atualizaMesaSelecionada(Status.DISPONIVEL);
+        });
+
+        final JMenuItem menuOcupado = new JMenuItem("Ocupado");
+        menuOcupado.addActionListener((ActionEvent ae) -> {
+            atualizaMesaSelecionada(Status.OCUPADO);
+        });
+
+        final JMenuItem menuReservado = new JMenuItem("Reservado");
+        menuReservado.addActionListener((ActionEvent ae) -> {
+            atualizaMesaSelecionada(Status.RESERVADO);
+        });
+
+        statusMenu.add(menuDisponivel);
+        statusMenu.add(menuOcupado);
+        statusMenu.add(menuReservado);
+
+        jPopupMenu.add(statusMenu);
+        jPopupMenu.show((Component) e.getSource(), 0, 0);
+    }
+
+    private void atualizaMesaSelecionada(final Status status) {
+        mesaSelecionada.setStatus(status);
+        setMesaSelecionada(selectedButton);
     }
 
     private JButton criarBotaoAdicionar() {
@@ -138,9 +181,10 @@ public class MesaController {
                 return Color.RED;
             case DISPONIVEL:
                 return Color.BLUE;
-            default:
+            case RESERVADO:
                 return Color.YELLOW;
         }
+        return null;
     }
     
     private Color getCorBotaoSelecionado(Status status) {
@@ -149,9 +193,10 @@ public class MesaController {
                 return Color.RED.darker().darker().darker();
             case DISPONIVEL:
                 return Color.BLUE.darker().darker().darker();
-            default:
+            case RESERVADO:
                 return Color.YELLOW.darker().darker().darker();
         }
+        return null;
     }
 
     private void adicionarBotaoMesa(JButton botao) {
@@ -163,6 +208,7 @@ public class MesaController {
     public void addPedido(Pedido pedido) {
         mesaSelecionada.addPedido(pedido);
         atualizaTabelaProdutos();
+        atualizaMesas();
     }
 
     public void removerPedido() {
@@ -174,5 +220,11 @@ public class MesaController {
     
     public double getValorTotalMesa() {
         return mesaSelecionada.calcularValorTotal();
+    }
+
+    public void fecharMesa() {
+        mesaSelecionada.limparPedidos();
+        atualizaMesas();
+        atualizaTabelaProdutos();
     }
 }
