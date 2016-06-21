@@ -13,22 +13,12 @@ import java.io.Serializable;
  */
 public class Pedido implements Serializable {
 
-    private final int numero;
     private final Produto produto;
     private int quantidade;
 
-    public Pedido(int numero, Produto produto, int quantidade) {
-        this.numero = numero;
+    public Pedido(Produto produto, int quantidade) {
         this.produto = produto;
         this.quantidade = quantidade;
-    }
-
-    public Pedido(int numero, Produto produto) {
-        this(numero, produto, 1);
-    }
-
-    public int getNumero() {
-        return numero;
     }
 
     public int getQuantidade() {

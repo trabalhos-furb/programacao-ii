@@ -5,11 +5,13 @@
  */
 package trabalhoprogramacao2;
 
+import ClasseCadastro.Pedido;
+import ClasseCadastro.Produto;
 import Controller.ControllerUsuario;
 import Controller.MesaController;
+import Controller.ControllerProduto;
 import TelaCadastro.TelaProduto;
 import TelaCadastro.TelaUsuarios;
-import java.awt.GridBagConstraints;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.Box;
@@ -24,14 +26,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     Controller.ControllerUsuario controleUsuario = new ControllerUsuario();
     private final MesaController mesaController;
+    private final ControllerProduto controllerProduto = new ControllerProduto();
+    private Produto produtoSelecionado;
 
     /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
         initComponents();
-        mesaController = new MesaController(panelMesas);
-        this.logarSistema();
+        mesaController = new MesaController(panelMesas, tabelaProdutos, lbValorTotalMesa);
+        //this.logarSistema();
     }
 
     /**
@@ -166,10 +170,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         tabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Item", "Cod Produto", "Desc. Produto", "Quantidade", "Valor Unit.", "Valor Total"
@@ -222,9 +223,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel3.setText("Produto:");
 
-        descricaoProduto.setText("Remover este texto.");
+        codigoProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                codigoProdutoActionPerformed(evt);
+            }
+        });
 
-        quantidadeProduto.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        quantidadeProduto.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         quantidadeProduto.setToolTipText("");
 
         jLabel5.setText("Quantidade");
@@ -409,11 +414,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_lbValorProdutoActionPerformed
 
     private void btAdicionarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarProdutoActionPerformed
-        // TODO add your handling code here:
+        if (produtoSelecionado == null) {
+            JOptionPane.showMessageDialog(this, "Favor selecionar um produto!");
+            codigoProduto.requestFocus();
+        } else {
+            mesaController.addPedido(new Pedido(produtoSelecionado, (int) quantidadeProduto.getValue()));
+        }
     }//GEN-LAST:event_btAdicionarProdutoActionPerformed
 
     private void btExcluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirProdutoActionPerformed
-        // TODO add your handling code here:
+        mesaController.removerPedido();
     }//GEN-LAST:event_btExcluirProdutoActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -434,7 +444,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.logarSistema();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    public void logarSistema() {
+    private void codigoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoProdutoActionPerformed
+        produtoSelecionado = controllerProduto.pesquisarProduto(Integer.parseInt(this.codigoProduto.getText()));
+        if (produtoSelecionado == null) {
+            JOptionPane.showMessageDialog(this, "O produto selecionado não existe!");
+            descricaoProduto.setText("");
+        } else {
+            descricaoProduto.setText(produtoSelecionado.getDescricao());
+        }
+        atualizaValorProduto();
+    }//GEN-LAST:event_codigoProdutoActionPerformed
+
+    private void atualizaValorProduto() {
+        if (produtoSelecionado == null) {
+            this.lbValorProduto.setText("");
+        } else {
+            this.lbValorProduto.setText(String.valueOf(produtoSelecionado.getValor() * Integer.valueOf(this.codigoProduto.getText())));
+        }
+    }
+
+    private void logarSistema() {
         TelaLogin TelaLogin = new TelaLogin(this, rootPaneCheckingEnabled);
 
         TelaLogin.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); //Desativa X padrão

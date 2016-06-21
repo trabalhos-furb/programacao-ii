@@ -13,12 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class controllerProduto {
+public class ControllerProduto {
 
     Path verificaSeExiste = Paths.get("./src/Banco de Dados/Produtos.data");
     private HashMap<Integer, Produto> listaProdutos;
 
-    public controllerProduto() {
+    public ControllerProduto() {
         listaProdutos = new HashMap<>();
         this.carregaListaProduto();
     }

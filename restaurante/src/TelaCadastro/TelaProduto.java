@@ -6,7 +6,7 @@
 package TelaCadastro;
 
 import ClasseCadastro.Produto;
-import Controller.controllerProduto;
+import Controller.ControllerProduto;
 import Pesquisa.PesquisaProduto;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class TelaProduto extends javax.swing.JDialog {
 
-    controllerProduto controleProdutos = new controllerProduto();
+    ControllerProduto controleProdutos = new ControllerProduto();
 
     /**
      * Creates new form TelaProduto

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class Mesa implements Serializable {
 
-    private int numero;
+    private final int numero;
     private Status status;
     private final List<Pedido> pedidos;
 
@@ -41,12 +41,24 @@ public class Mesa implements Serializable {
         pedidos.add(p);
     }
     
+    public int getQuantidadePedidos() {
+        return this.pedidos.size();
+    }
+    
+    public Pedido getPedido(int numero) {
+        return this.pedidos.get(numero);
+    }
+    
     public double calcularValorTotal() {
         double total = 0;
         for (Pedido produto : pedidos) {
             total += produto.calculaValorTotal();
         }
         return total;
+    }
+
+    public void removePedido(int pedido) {
+        this.pedidos.remove(pedido);
     }
     
 }

@@ -327,7 +327,7 @@
         <Component class="javax.swing.JTable" name="tabelaProdutos">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="6" rowCount="4">
+              <Table columnCount="6" rowCount="0">
                 <Column editable="false" title="Item" type="java.lang.Integer"/>
                 <Column editable="false" title="Cod Produto" type="java.lang.Integer"/>
                 <Column editable="false" title="Desc. Produto" type="java.lang.String"/>
@@ -412,11 +412,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="codigoProduto">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="codigoProdutoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="descricaoProduto">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Remover este texto."/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JSpinner" name="quantidadeProduto">
       <Properties>

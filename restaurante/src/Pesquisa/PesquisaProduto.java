@@ -6,7 +6,7 @@
 package Pesquisa;
 
 import ClasseCadastro.Produto;
-import Controller.controllerProduto;
+import Controller.ControllerProduto;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PesquisaProduto extends javax.swing.JDialog {
 
-    controllerProduto controleProduto = new controllerProduto();
+    ControllerProduto controleProduto = new ControllerProduto();
     DefaultTableModel modelo;
     private int codigoProduto;
 
