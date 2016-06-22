@@ -5,7 +5,7 @@
  */
 package Pesquisa;
 
-import ClasseCadastro.Usuario;
+import modelo.Usuario;
 import Controller.ControllerUsuario;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;

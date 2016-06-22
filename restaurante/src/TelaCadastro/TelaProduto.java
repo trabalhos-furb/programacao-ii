@@ -5,7 +5,7 @@
  */
 package TelaCadastro;
 
-import ClasseCadastro.Produto;
+import modelo.produto.Produto;
 import Controller.ControllerProduto;
 import Pesquisa.PesquisaProduto;
 import java.awt.event.ActionEvent;

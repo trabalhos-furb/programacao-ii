@@ -5,29 +5,29 @@
  */
 package Controller;
 
-import ClasseCadastro.Mesa;
-import ClasseCadastro.Pedido;
-import ClasseCadastro.Persistence;
-import ClasseCadastro.Status;
+import modelo.mesa.ServicoMesa;
+import modelo.Pedido;
+import modelo.mesa.Status;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import modelo.mesa.FabricaServicoMesa;
+import modelo.mesa.Mesa;
 
 /**
  *
@@ -35,15 +35,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MesaController {
 
-    private List<Mesa> mesas;
     private final GridBagConstraints gridConstraints = new GridBagConstraints();
     private int proximoIndiceColuna = 1;
     private final JPanel panelMesas;
-    private final Persistence<Mesa> persistence = new Persistence<>();
     private final JTable tabelaProdutos;
     private JButton selectedButton = null;
     private Mesa mesaSelecionada = null;
     private final JTextField lbValorTotalMesa;
+    private final ServicoMesa servicoMesa;
 
     public MesaController(JPanel panelMesas, JTable tabelaProdutos, JTextField lbValorTotalMesa) {
         this.panelMesas = panelMesas;
@@ -51,6 +50,7 @@ public class MesaController {
         this.lbValorTotalMesa = lbValorTotalMesa;
         setGridConstraints();
         carregarMesas();
+        this.servicoMesa = FabricaServicoMesa.getServicoMesa();
     }
 
     private void setGridConstraints() {
@@ -60,20 +60,19 @@ public class MesaController {
     }
 
     private void carregarMesas() {
-        this.mesas = persistence.load("Mesas");
         atualizaMesas();
     }
 
     private void atualizaMesas() {
         proximoIndiceColuna = 1;
         panelMesas.removeAll();
-        for (Mesa mesa : mesas) {
+        for (Mesa mesa : servicoMesa) {
             adicionarBotaoMesa(criarBotao(mesa));
         }
         adicionarBotaoMesa(criarBotaoAdicionar());
         this.panelMesas.revalidate();
         this.panelMesas.repaint();
-        persistence.save(mesas, "Mesas");
+        this.servicoMesa.persistir();
     }
 
     private JButton criarBotao(Mesa mesa) {
@@ -139,7 +138,7 @@ public class MesaController {
         jButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                mesas.add(new Mesa(mesas.size()+1, Status.DISPONIVEL));
+                servicoMesa.addMesa();
                 atualizaMesas();
                 super.mouseClicked(e);
             }
@@ -152,7 +151,7 @@ public class MesaController {
             selectedButton.setBackground(getCorBotao(mesaSelecionada.getStatus()));
         }
         selectedButton = button;
-        mesaSelecionada = getMesa(Integer.valueOf(selectedButton.getText()));
+        mesaSelecionada = servicoMesa.getMesa(Integer.valueOf(selectedButton.getText()));
         selectedButton.setBackground(getCorBotaoSelecionado(mesaSelecionada.getStatus()));
     }
 
@@ -164,15 +163,6 @@ public class MesaController {
             tableModel.addRow(new Object[]{i+1, pedido.getCodigoProduto(), pedido.getDescricaoProduto(), pedido.getQuantidade(), pedido.getValorUnitario(), pedido.calculaValorTotal()});
         }
         lbValorTotalMesa.setText(String.valueOf(mesaSelecionada.calcularValorTotal()));
-    }
-
-    private Mesa getMesa(int numeroMesa) {
-        for (Mesa mesa : mesas) {
-            if (mesa.getNumero() == numeroMesa) {
-                return mesa;
-            }
-        }
-        return null;
     }
 
     private Color getCorBotao(Status status) {
@@ -206,6 +196,9 @@ public class MesaController {
     }
 
     public void addPedido(Pedido pedido) {
+        if (mesaSelecionada == null) {
+            JOptionPane.showMessageDialog(null, "É preciso selecionar uma mesa!");
+        }
         mesaSelecionada.addPedido(pedido);
         atualizaTabelaProdutos();
         atualizaMesas();

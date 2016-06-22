@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ClasseCadastro;
+package modelo;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -46,7 +46,4 @@ public class Persistence<T> {
         return new ArrayList<>();
     }
 
-    public static void main(String[] args) {
-        
-    }
 }

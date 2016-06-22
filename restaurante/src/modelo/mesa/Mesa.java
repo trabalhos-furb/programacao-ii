@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ClasseCadastro;
+package modelo.mesa;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.Pedido;
 
 /**
  *
@@ -19,7 +20,7 @@ public class Mesa implements Serializable {
     private Status status;
     private final List<Pedido> pedidos;
 
-    public Mesa(int numero, Status status) {
+    Mesa(int numero, Status status) {
         this.numero = numero;
         this.status = status;
         this.pedidos = new ArrayList<>();

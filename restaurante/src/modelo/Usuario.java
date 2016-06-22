@@ -1,5 +1,4 @@
-
-package ClasseCadastro;
+package modelo;
 
 import java.io.Serializable;
 
@@ -7,26 +6,25 @@ import java.io.Serializable;
  *
  * @author Vanila
  */
-public class Usuario implements Serializable{
+public class Usuario implements Serializable {
 
+    private String login;
+    private String senha;
+    private Cargo cargo;
 
- private String login;
- private String senha;
- private Cargo cargo;
+    public Usuario() {
 
- public Usuario(){
- 
-     this.setLogin(null);
-     this.setSenha(null);
-     this.setCargo(Cargo.GARCOM);
- 
- }
- 
- public Usuario(String login,String senha,Cargo cargo){
-     this.setLogin(login);
-     this.setSenha(senha);
-     this.setCargo(cargo);
- }
+        this.setLogin(null);
+        this.setSenha(null);
+        this.setCargo(Cargo.GARCOM);
+
+    }
+
+    public Usuario(String login, String senha, Cargo cargo) {
+        this.setLogin(login);
+        this.setSenha(senha);
+        this.setCargo(cargo);
+    }
 
     /**
      * @return the lo gin
@@ -69,15 +67,15 @@ public class Usuario implements Serializable{
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
-    
+
     @Override
-	   public String toString() {
-    	   return new StringBuffer(" Login : ")
-    	   .append(this.login)
-    	   .append(" Senha : ")
-    	   .append(this.senha)
-           .append(" Cargo: ")
-           .append(this.cargo).toString();
-	   }
- 
+    public String toString() {
+        return new StringBuffer(" Login : ")
+                .append(this.login)
+                .append(" Senha : ")
+                .append(this.senha)
+                .append(" Cargo: ")
+                .append(this.cargo).toString();
+    }
+
 }

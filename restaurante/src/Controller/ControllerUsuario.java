@@ -1,7 +1,7 @@
 package Controller;
 
-import ClasseCadastro.Cargo;
-import ClasseCadastro.Usuario;
+import modelo.Cargo;
+import modelo.Usuario;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;

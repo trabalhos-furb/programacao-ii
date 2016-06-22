@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ClasseCadastro;
-
-import java.io.Serializable;
+package modelo.produto;
 
 /**
  *
  * @author junio_000
  */
-public enum Status implements Serializable {
-    DISPONIVEL, RESERVADO, OCUPADO;
+public class FabricaServicoProduto {
+    
+    public static ServicoProduto getServicoProduto() {
+        return new ServicoProdutoImpl();
+    }
 }

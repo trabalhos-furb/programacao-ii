@@ -5,8 +5,8 @@
  */
 package TelaCadastro;
 
-import ClasseCadastro.Cargo;
-import ClasseCadastro.Usuario;
+import modelo.Cargo;
+import modelo.Usuario;
 import Controller.ControllerUsuario;
 import Pesquisa.Pesquisa;
 import java.awt.event.ActionEvent;
@@ -39,7 +39,7 @@ public class TelaUsuarios extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        comboboxCargo = new javax.swing.JComboBox<>(ClasseCadastro.Cargo.values());
+        comboboxCargo = new javax.swing.JComboBox<>(modelo.Cargo.values());
         labelCargo = new javax.swing.JLabel();
         btEditar = new javax.swing.JButton();
         labelLogin = new javax.swing.JLabel();
@@ -342,7 +342,7 @@ public class TelaUsuarios extends javax.swing.JDialog {
     private javax.swing.JButton btExcluir;
     public javax.swing.JButton btNovo;
     public javax.swing.JButton btPesquisar;
-    public javax.swing.JComboBox<ClasseCadastro.Cargo> comboboxCargo;
+    public javax.swing.JComboBox<modelo.Cargo> comboboxCargo;
     private javax.swing.JLabel labelCargo;
     private javax.swing.JLabel labelConfirmaSenha;
     private javax.swing.JLabel labelLogin;

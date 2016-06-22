@@ -5,14 +5,15 @@
  */
 package trabalhoprogramacao2;
 
-import ClasseCadastro.Pedido;
-import ClasseCadastro.Produto;
+import modelo.Pedido;
+import modelo.produto.Produto;
 import Controller.ControllerUsuario;
 import Controller.MesaController;
 import Controller.ControllerProduto;
 import Pesquisa.PesquisaProduto;
 import TelaCadastro.TelaProduto;
 import TelaCadastro.TelaUsuarios;
+import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.Box;
@@ -232,6 +233,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         codigoProduto.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 codigoProdutoFocusGained(evt);
+            }
+        });
+        codigoProduto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                codigoProdutoMouseClicked(evt);
             }
         });
         codigoProduto.addActionListener(new java.awt.event.ActionListener() {
@@ -457,6 +463,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void codigoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoProdutoActionPerformed
         produtoSelecionado = controllerProduto.pesquisarProduto(Integer.parseInt(this.codigoProduto.getText()));
+        selecionaProduto();
+    }//GEN-LAST:event_codigoProdutoActionPerformed
+
+    private void selecionaProduto() throws HeadlessException {
         if (produtoSelecionado == null) {
             JOptionPane.showMessageDialog(this, "O produto selecionado não existe!");
             descricaoProduto.setText("");
@@ -464,7 +474,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             descricaoProduto.setText(produtoSelecionado.getDescricao());
         }
         atualizaValorProduto();
-    }//GEN-LAST:event_codigoProdutoActionPerformed
+    }
 
     private void btFecharMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharMesaActionPerformed
         if (new TelaPagamento(this, this.mesaController.getValorTotalMesa()).success()) {
@@ -473,8 +483,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btFecharMesaActionPerformed
 
     private void codigoProdutoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_codigoProdutoFocusGained
-        produtoSelecionado = new PesquisaProduto(null).getProdutoSelecionado();
+        
     }//GEN-LAST:event_codigoProdutoFocusGained
+
+    private void codigoProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_codigoProdutoMouseClicked
+        produtoSelecionado = new PesquisaProduto(null).getProdutoSelecionado();
+        selecionaProduto();
+    }//GEN-LAST:event_codigoProdutoMouseClicked
 
     private void atualizaValorProduto() {
         if (produtoSelecionado == null) {

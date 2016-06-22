@@ -5,7 +5,7 @@
  */
 package Pesquisa;
 
-import ClasseCadastro.Produto;
+import modelo.produto.Produto;
 import Controller.ControllerProduto;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -149,11 +149,12 @@ public class PesquisaProduto extends javax.swing.JDialog {
 
     private void btPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisaActionPerformed
         this.modelo.getDataVector().removeAllElements();
-
+        this.controleProduto
+        
         if (this.controleProduto.listaProdutoVazia()) {
 
             if (!(this.txtcodigo.getText().isEmpty())) {
-                if (this.controleProduto.verificaProduto(Integer.parseInt(this.txtcodigo.getText()))) {
+                if (this.controleProduto.existeProduto(Integer.parseInt(this.txtcodigo.getText()))) {
                     Produto produto;
                     produto = this.controleProduto.pesquisarProduto(Integer.parseInt(this.txtcodigo.getText()));
 
@@ -207,7 +208,7 @@ public class PesquisaProduto extends javax.swing.JDialog {
             int selecionado = table.getSelectedRow();
 
             if (selecionado != -1) {
-                this.produtoSelecionado = this.controleProduto.pesquisarProduto((int) table.getValueAt(selecionado, 0));
+//                this.produtoSelecionado = this.controleProduto.pesquisarProduto((int) table.getValueAt(selecionado, 0));
                 this.dispose();
 
             }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ClasseCadastro;
+package modelo.produto;
 
 import java.io.Serializable;
 
@@ -17,7 +17,7 @@ public class Produto implements Serializable {
     private String descricao;
     private float valor;
 
-    public Produto(int codigo, String descricao, float valor) {
+    Produto(int codigo, String descricao, float valor) {
         this.codigo = codigo;
         this.descricao = descricao;
         this.valor = valor;
