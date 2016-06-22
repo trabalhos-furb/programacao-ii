@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package TelaCadastro;
+package telas;
 
-import modelo.Cargo;
-import modelo.Usuario;
-import Controller.ControllerUsuario;
-import Pesquisa.Pesquisa;
+import modelo.usuario.Cargo;
+import controlador.ControllerUsuario;
+import controlador.ControllerPesquisaUsuario;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import modelo.usuario.Usuario;
 
 /**
  *
@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class TelaUsuarios extends javax.swing.JDialog {
 
-    Controller.ControllerUsuario controleUsario = new ControllerUsuario();
+    controlador.ControllerUsuario controleUsario = new ControllerUsuario();
 
     /**
      * Creates new form TelaUsuarios
@@ -27,7 +27,6 @@ public class TelaUsuarios extends javax.swing.JDialog {
     public TelaUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        controleUsario.carregaListaUsuario();
     }
 
     /**
@@ -39,7 +38,7 @@ public class TelaUsuarios extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        comboboxCargo = new javax.swing.JComboBox<>(modelo.Cargo.values());
+        comboboxCargo = new javax.swing.JComboBox<>(modelo.usuario.Cargo.values());
         labelCargo = new javax.swing.JLabel();
         btEditar = new javax.swing.JButton();
         labelLogin = new javax.swing.JLabel();
@@ -179,7 +178,7 @@ public class TelaUsuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
-        Pesquisa pesquisar = new Pesquisa(null, true);
+        ControllerPesquisaUsuario pesquisar = new ControllerPesquisaUsuario(null, true);
 
         pesquisar.setLocationRelativeTo(null);
         pesquisar.setModal(true);
@@ -342,7 +341,7 @@ public class TelaUsuarios extends javax.swing.JDialog {
     private javax.swing.JButton btExcluir;
     public javax.swing.JButton btNovo;
     public javax.swing.JButton btPesquisar;
-    public javax.swing.JComboBox<modelo.Cargo> comboboxCargo;
+    public javax.swing.JComboBox<modelo.usuario.Cargo> comboboxCargo;
     private javax.swing.JLabel labelCargo;
     private javax.swing.JLabel labelConfirmaSenha;
     private javax.swing.JLabel labelLogin;

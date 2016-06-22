@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trabalhoprogramacao2;
+package telas;
 
 import modelo.Pedido;
 import modelo.produto.Produto;
-import Controller.ControllerUsuario;
-import Controller.MesaController;
-import Controller.ControllerProduto;
-import Pesquisa.PesquisaProduto;
-import TelaCadastro.TelaProduto;
-import TelaCadastro.TelaUsuarios;
+import controlador.ControllerUsuario;
+import controlador.ControllerMesa;
+import controlador.ControllerProduto;
+import controlador.ControllerPesquisaProduto;
 import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -26,8 +24,8 @@ import javax.swing.WindowConstants;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
 
-    Controller.ControllerUsuario controleUsuario = new ControllerUsuario();
-    private final MesaController mesaController;
+    controlador.ControllerUsuario controleUsuario = new ControllerUsuario();
+    private final ControllerMesa mesaController;
     private final ControllerProduto controllerProduto = new ControllerProduto();
     private Produto produtoSelecionado;
 
@@ -36,8 +34,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public TelaPrincipal() {
         initComponents();
-        mesaController = new MesaController(panelMesas, tabelaProdutos, lbValorTotalMesa);
-        //this.logarSistema();
+        mesaController = new ControllerMesa(panelMesas, tabelaProdutos, lbValorTotalMesa);
+        this.logarSistema();
     }
 
     /**
@@ -410,7 +408,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaUsuario.setModal(true);
         telaUsuario.setVisible(true); //Chama a dialog
 
-        this.controleUsuario.carregaListaUsuario();
         if (!(this.controleUsuario.usuarioLogado.getLogin().equalsIgnoreCase("Suporte"))) {
             if (this.controleUsuario.verificaUsuarioLogado()) {
                 JOptionPane.showMessageDialog(null, "Usuário foi removido, para continuar entre com outro usuário!");
@@ -462,7 +459,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void codigoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoProdutoActionPerformed
-        produtoSelecionado = controllerProduto.pesquisarProduto(Integer.parseInt(this.codigoProduto.getText()));
+        produtoSelecionado = controllerProduto.getProduto(Integer.parseInt(this.codigoProduto.getText()));
         selecionaProduto();
     }//GEN-LAST:event_codigoProdutoActionPerformed
 
@@ -487,7 +484,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_codigoProdutoFocusGained
 
     private void codigoProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_codigoProdutoMouseClicked
-        produtoSelecionado = new PesquisaProduto(null).getProdutoSelecionado();
+        produtoSelecionado = new ControllerPesquisaProduto(null).getProdutoSelecionado();
         selecionaProduto();
     }//GEN-LAST:event_codigoProdutoMouseClicked
 
@@ -495,7 +492,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         if (produtoSelecionado == null) {
             this.lbValorProduto.setText("");
         } else {
-            this.lbValorProduto.setText(String.valueOf(produtoSelecionado.getValor() * Integer.valueOf(this.codigoProduto.getText())));
+            this.lbValorProduto.setText(String.valueOf(produtoSelecionado.getValor() * (int) this.quantidadeProduto.getValue()));
         }
     }
 

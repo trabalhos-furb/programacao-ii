@@ -1,4 +1,4 @@
-package modelo;
+package modelo.usuario;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ public class Usuario implements Serializable {
     private String senha;
     private Cargo cargo;
 
-    public Usuario() {
+    Usuario() {
 
         this.setLogin(null);
         this.setSenha(null);

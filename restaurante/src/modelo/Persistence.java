@@ -13,7 +13,9 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -21,10 +23,27 @@ import java.util.List;
  */
 public class Persistence<T> {
 
-    public Persistence() {
+    private static Persistence instance = null;
+    
+    public static <T> Persistence<T> getInstance() {
+        if (instance == null) {
+            instance = new Persistence<>();
+        }
+        return instance;
+    }
+    
+    private Persistence() {
     }
 
     public void save(List<T> object, String nomeArquivo) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("src/Banco de Dados/" + nomeArquivo + ".data"))) {
+            outputStream.writeObject(object);
+        } catch (IOException ex) {
+            throw new RuntimeException("Erro ao salvar arquivo", ex);
+        }
+    }
+
+    public void save(Map<String, T> object, String nomeArquivo) {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("src/Banco de Dados/" + nomeArquivo + ".data"))) {
             outputStream.writeObject(object);
         } catch (IOException ex) {
@@ -44,6 +63,20 @@ public class Persistence<T> {
             }
         }
         return new ArrayList<>();
+    }
+
+    public Map<String, T> loadMap(String nomeArquivo) {
+        final String fileName = "src/Banco de Dados/" + nomeArquivo + ".data";
+        if (Files.exists(Paths.get(fileName))) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+                return (Map<String, T>) ois.readObject();
+            } catch (IOException e) {
+                throw new RuntimeException("Erro ao carregar arquivo", e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException("Erro ao converter classe", e);
+            }
+        }
+        return new HashMap<>();
     }
 
 }

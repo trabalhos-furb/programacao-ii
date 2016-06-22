@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +15,10 @@ import java.util.List;
 public abstract class AbstractModel<T> implements Model<T> {
     
     private List<ModelChangeListener> listeners;
+
+    protected AbstractModel() {
+        listeners = new ArrayList<>();
+    }
     
     @Override
     public void addListener(ModelChangeListener modelListener) {

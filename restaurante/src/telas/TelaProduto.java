@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package TelaCadastro;
+package telas;
 
 import modelo.produto.Produto;
-import Controller.ControllerProduto;
-import Pesquisa.PesquisaProduto;
+import controlador.ControllerProduto;
+import controlador.ControllerPesquisaProduto;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -181,7 +181,7 @@ public class TelaProduto extends javax.swing.JDialog {
     }//GEN-LAST:event_btEditarActionPerformed
 
     private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
-        PesquisaProduto pesquisar = new PesquisaProduto(null);
+        ControllerPesquisaProduto pesquisar = new ControllerPesquisaProduto(null);
 
             Produto produtoSelecionado = pesquisar.getProdutoSelecionado();
         if (produtoSelecionado != null) {

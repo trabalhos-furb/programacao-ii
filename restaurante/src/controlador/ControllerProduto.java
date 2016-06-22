@@ -1,9 +1,9 @@
-package Controller;
+package controlador;
 
 import modelo.produto.Produto;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
 import modelo.produto.FabricaServicoProduto;
 import modelo.produto.ServicoProduto;
@@ -20,8 +20,8 @@ public class ControllerProduto {
     public void removeProduto(int codigo) {
         servicoProduto.removerProduto(codigo);
     }
-    
-    public boolean existeProduto(int codigo){
+
+    public boolean existeProduto(int codigo) {
         return servicoProduto.getProduto(codigo) != null;
     }
 
@@ -40,8 +40,20 @@ public class ControllerProduto {
             servicoProduto.persistir();
         }
     }
-    
-    public List<Produto> pesquisar(ModoPesquisaProduto modoPesquisa) {
+
+    public Iterator<Produto> filtrar(ModoPesquisaProduto modoPesquisa, String valor) {
+        switch (modoPesquisa) {
+            case TODOS:
+                return servicoProduto.iterator();
+            case DESCRICAO:
+                return servicoProduto.getProdutosPorDescricao(valor);
+            case CODIGO:
+                return servicoProduto.getProdutosPorCodigo(Integer.valueOf(valor));
+        }
         return null;
+    }
+    
+    public Produto getProduto(int codigo) {
+        return servicoProduto.getProduto(codigo);
     }
 }

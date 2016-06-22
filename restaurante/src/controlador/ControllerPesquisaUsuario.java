@@ -3,33 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pesquisa;
+package controlador;
 
-import modelo.Usuario;
-import Controller.ControllerUsuario;
+import controlador.ControllerUsuario;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import modelo.usuario.Usuario;
 
 /**
  *
  * @author Vanila
  */
-public class Pesquisa extends javax.swing.JDialog {
+public class ControllerPesquisaUsuario extends javax.swing.JDialog {
 
-    Controller.ControllerUsuario controleUsario = new ControllerUsuario();
+    controlador.ControllerUsuario controleUsario = new ControllerUsuario();
     DefaultTableModel modelo;
     private String NomeUsuarioSelecionado;
 
     /**
      * Creates new form Pesquisa
      */
-    public Pesquisa(java.awt.Frame parent, boolean modal) {
+    public ControllerPesquisaUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         String[] colunas = new String[]{"Login", "Senha", "Cargo"};
         modelo = new DefaultTableModel(null, colunas);
         table.setModel(modelo);
-        
+
         this.setNomeSelecionado("");
     }
 
@@ -94,15 +94,15 @@ public class Pesquisa extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addComponent(btPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(tabelLogin)
-                        .addGap(7, 7, 7)
-                        .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tabelLogin)
+                                .addGap(7, 7, 7)
+                                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -126,24 +126,18 @@ public class Pesquisa extends javax.swing.JDialog {
     private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
         this.modelo.getDataVector().removeAllElements();
 
-        if (this.controleUsario.listaUsuarioVazia()) {
+        Usuario usuarioSelecionado;
 
-            Usuario usuarioSelecionado;
+        if (this.txtLogin.getText().isEmpty()) {
 
-            if (!(this.txtLogin.getText().isEmpty())) {
+            usuarioSelecionado = this.controleUsario.pesquisarUsuario(this.txtLogin.getText());
+            if (usuarioSelecionado != null) {
+                modelo.addRow(new Object[]{usuarioSelecionado.getLogin(), usuarioSelecionado.getSenha(), usuarioSelecionado.getCargo()});
+            }
+        } else {
 
-                usuarioSelecionado = this.controleUsario.pesquisarUsuario(this.txtLogin.getText());
-                if (!(usuarioSelecionado == null)) {
-                    modelo.addRow(new Object[]{usuarioSelecionado.getLogin(), usuarioSelecionado.getSenha(), usuarioSelecionado.getCargo()});
-                }
-            } else {
-
-                List<Usuario> lista = this.controleUsario.listatodosUsuarios();
-
-                for (int i = 0; i < lista.size(); i++) {
-
-                    modelo.addRow(new Object[]{lista.get(i).getLogin(), lista.get(i).getSenha(), lista.get(i).getCargo()});
-                }
+            for (Usuario usuario : this.controleUsario.getIterable()) {
+                modelo.addRow(new Object[]{usuario.getLogin(), usuario.getSenha(), usuario.getCargo()});
             }
         }
 
@@ -188,20 +182,21 @@ public class Pesquisa extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Pesquisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ControllerPesquisaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Pesquisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ControllerPesquisaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Pesquisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ControllerPesquisaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Pesquisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ControllerPesquisaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Pesquisa dialog = new Pesquisa(new javax.swing.JFrame(), true);
+                ControllerPesquisaUsuario dialog = new ControllerPesquisaUsuario(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

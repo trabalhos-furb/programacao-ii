@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package controlador;
 
 import modelo.mesa.ServicoMesa;
 import modelo.Pedido;
@@ -33,7 +33,7 @@ import modelo.mesa.Mesa;
  *
  * @author junio_000
  */
-public class MesaController {
+public class ControllerMesa {
 
     private final GridBagConstraints gridConstraints = new GridBagConstraints();
     private int proximoIndiceColuna = 1;
@@ -44,13 +44,13 @@ public class MesaController {
     private final JTextField lbValorTotalMesa;
     private final ServicoMesa servicoMesa;
 
-    public MesaController(JPanel panelMesas, JTable tabelaProdutos, JTextField lbValorTotalMesa) {
+    public ControllerMesa(JPanel panelMesas, JTable tabelaProdutos, JTextField lbValorTotalMesa) {
+        this.servicoMesa = FabricaServicoMesa.getServicoMesa();
         this.panelMesas = panelMesas;
         this.tabelaProdutos = tabelaProdutos;
         this.lbValorTotalMesa = lbValorTotalMesa;
         setGridConstraints();
         carregarMesas();
-        this.servicoMesa = FabricaServicoMesa.getServicoMesa();
     }
 
     private void setGridConstraints() {

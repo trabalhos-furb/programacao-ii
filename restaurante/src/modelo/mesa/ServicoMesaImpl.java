@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import modelo.AbstractModel;
 import modelo.Model;
+import modelo.Persistence;
 
 /**
  *
@@ -24,11 +25,13 @@ class ServicoMesaImpl extends AbstractModel<Mesa> implements ServicoMesa {
 
     @Override
     public void persistir() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final Persistence<Mesa> instance = Persistence.getInstance();
+        instance.save(mesas, "Mesas");
     }
 
     private void carregarMesas() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final Persistence<Mesa> instance = Persistence.getInstance();
+        this.mesas = instance.load("Mesas");
     }
 
     @Override
@@ -49,6 +52,6 @@ class ServicoMesaImpl extends AbstractModel<Mesa> implements ServicoMesa {
 
     @Override
     public Iterator<Mesa> iterator() {
-        return new MesaIterator(this.mesas);
+        return this.mesas.iterator();
     }
 }

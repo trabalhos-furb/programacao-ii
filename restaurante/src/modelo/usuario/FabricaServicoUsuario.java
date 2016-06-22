@@ -3,19 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo.mesa;
-
-import java.util.List;
-import modelo.AbstractIterator;
+package modelo.usuario;
 
 /**
  *
  * @author junio_000
  */
-class MesaIterator extends AbstractIterator<Mesa> {
-
-    public MesaIterator(List<Mesa> itens) {
-        super(itens);
+public class FabricaServicoUsuario {
+    
+    public static ServicoUsuario getServicoUsuario() {
+        return new ServicoUsuarioImpl();
     }
-
 }

@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pesquisa;
+package controlador;
 
 import modelo.produto.Produto;
-import Controller.ControllerProduto;
+import controlador.ControllerProduto;
+import controlador.ModoPesquisaProduto;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Jonathan - Vanila
  */
-public class PesquisaProduto extends javax.swing.JDialog {
+public class ControllerPesquisaProduto extends javax.swing.JDialog {
 
     ControllerProduto controleProduto = new ControllerProduto();
     DefaultTableModel modelo;
@@ -23,7 +25,7 @@ public class PesquisaProduto extends javax.swing.JDialog {
     /**
      * Creates new form PesquisaProduto
      */
-    public PesquisaProduto(java.awt.Frame parent) {
+    public ControllerPesquisaProduto(java.awt.Frame parent) {
         super(parent, true);
         initComponents();
 
@@ -53,6 +55,8 @@ public class PesquisaProduto extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         btPesquisa = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cbFiltro = new javax.swing.JComboBox(ModoPesquisaProduto.values());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisa Produto");
@@ -96,6 +100,8 @@ public class PesquisaProduto extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setText("Filtro: ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,7 +126,11 @@ public class PesquisaProduto extends javax.swing.JDialog {
                             .addComponent(labelDescricao))
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btPesquisa)
                 .addContainerGap())
         );
@@ -138,7 +148,10 @@ public class PesquisaProduto extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btPesquisa)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btPesquisa)
+                    .addComponent(jLabel1)
+                    .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10))
@@ -149,56 +162,21 @@ public class PesquisaProduto extends javax.swing.JDialog {
 
     private void btPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisaActionPerformed
         this.modelo.getDataVector().removeAllElements();
-        this.controleProduto
-        
-        if (this.controleProduto.listaProdutoVazia()) {
+        Iterator<Produto> produtos;
+        switch ((ModoPesquisaProduto) this.cbFiltro.getSelectedItem()) {
+            case CODIGO:
+                produtos = this.controleProduto.filtrar(ModoPesquisaProduto.CODIGO, txtcodigo.getText());
+                break;
+            case DESCRICAO:
+                produtos = this.controleProduto.filtrar(ModoPesquisaProduto.DESCRICAO, txtDescricao.getText());
+                break;
+            default:
+                produtos = this.controleProduto.filtrar(ModoPesquisaProduto.TODOS, "");
+        }
 
-            if (!(this.txtcodigo.getText().isEmpty())) {
-                if (this.controleProduto.existeProduto(Integer.parseInt(this.txtcodigo.getText()))) {
-                    Produto produto;
-                    produto = this.controleProduto.pesquisarProduto(Integer.parseInt(this.txtcodigo.getText()));
-
-                    if (!(produto.getDescricao().isEmpty())) {
-                        modelo.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValor()});
-                    }
-                }
-            } else {
-
-                List<Produto> lista = this.controleProduto.listatodosProdutos();
-
-                if (this.txtpreco.getText().isEmpty() && !this.txtDescricao.getText().isEmpty()) {
-                    for (int i = 0; i < lista.size(); i++) {
-                        final Produto produto = lista.get(i);
-
-                        if (produto.getDescricao().equalsIgnoreCase(this.txtDescricao.getText())) {
-                            modelo.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValor()});
-                        }
-                    }
-                } else if (!this.txtpreco.getText().isEmpty() && this.txtDescricao.getText().isEmpty()) {
-                    for (int i = 0; i < lista.size(); i++) {
-                        final Produto produto = lista.get(i);
-
-                        if (produto.getValor() == Float.parseFloat(this.txtpreco.getText())) {
-                            modelo.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValor()});
-                        }
-                    }
-                } else if (!this.txtpreco.getText().isEmpty() && !this.txtDescricao.getText().isEmpty()) {
-
-                    for (int i = 0; i < lista.size(); i++) {
-                        final Produto produto = lista.get(i);
-
-                        if (produto.getValor() == Float.parseFloat(this.txtpreco.getText()) && produto.getDescricao().equalsIgnoreCase(this.txtDescricao.getText())) {
-                            modelo.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValor()});
-                        }
-                    }
-
-                } else {
-                    for (int i = 0; i < lista.size(); i++) {
-                        final Produto produto = lista.get(i);
-                        modelo.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValor()});
-                    }
-                }
-            }
+        while (produtos.hasNext()) {
+            Produto produto = produtos.next();
+            modelo.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValor()});
         }
     }//GEN-LAST:event_btPesquisaActionPerformed
 
@@ -208,7 +186,7 @@ public class PesquisaProduto extends javax.swing.JDialog {
             int selecionado = table.getSelectedRow();
 
             if (selecionado != -1) {
-//                this.produtoSelecionado = this.controleProduto.pesquisarProduto((int) table.getValueAt(selecionado, 0));
+                this.produtoSelecionado = this.controleProduto.getProduto((int) table.getValueAt(selecionado, 0));
                 this.dispose();
 
             }
@@ -221,6 +199,8 @@ public class PesquisaProduto extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btPesquisa;
+    private javax.swing.JComboBox cbFiltro;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelCodigo;
     private javax.swing.JLabel labelDescricao;

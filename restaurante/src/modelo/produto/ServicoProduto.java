@@ -5,6 +5,7 @@
  */
 package modelo.produto;
 
+import java.util.Iterator;
 import modelo.Model;
 
 /**
@@ -20,4 +21,9 @@ public interface ServicoProduto extends Model<Produto> {
     public void removerProduto(int codigo);
     
     public boolean existeProduto(int codigo);
+    
+    public Iterator<Produto> getProdutosPorDescricao(String descricao);
+    
+    public Iterator<Produto> getProdutosPorCodigo(int codigo);
+    
 }

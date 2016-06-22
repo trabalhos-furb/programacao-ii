@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trabalhoprogramacao2;
+package telas;
 
-import Controller.ControllerUsuario;
+import controlador.ControllerUsuario;
 import javax.swing.JOptionPane;
 
 /**
